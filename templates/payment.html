@@ -185,7 +185,7 @@ button:disabled {
 
 <script nonce="">
 // A reference to Stripe.js initialized with your real test publishable API key.
-var stripe = Stripe("{{STRIPE_PUBLIC_KEY}}");
+var stripe = Stripe('{{STRIPE_PUBLIC_KEY}}');
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 // The items the customer wants to buy
 var purchase = {
@@ -250,7 +250,7 @@ var payWithCard = function(stripe, card, clientSecret) {
   loading(true);
   stripe
     .confirmCardPayment(clientSecret, {
-      receipt_email: document.getElementById('email').value,
+      receipt_email: 'test@test.com',
       payment_method: {
         card: card
       }

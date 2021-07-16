@@ -202,22 +202,16 @@ class PaymentView(View):
 class StripeIntentView(View):
     def post(self, request, *args, **kwargs):
         try:
-            req_json = json.loads(request.body)
-            customer = stripe.Customer.create(email=req_json['email'])
-            product_id = self.kwargs["pk"]
-            product = Product.objects.get(id=product_id)
             intent = stripe.PaymentIntent.create(
-                amount=product.price,
+                amount=10000,
                 currency='usd',
-                customer=customer['id'],
-                metadata={
-                    "product_id": product.id
-                }
             )
+            print(intent)
             return JsonResponse({
                 'clientSecret': intent['client_secret']
             })
         except Exception as e:
+            print(e)
             return JsonResponse({'error': str(e)})
 
 
