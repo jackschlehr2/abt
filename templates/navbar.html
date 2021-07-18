@@ -1,4 +1,68 @@
 {% load cart_template_tags %}
+<style>
+ form {
+  width: 30vw;
+  min-width: 500px;
+  align-self: center;
+  box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+    0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+  border-radius: 7px;
+  padding: 40px;
+} 
+
+input {
+  border-radius: 6px;
+  margin-bottom: 6px;
+  padding: 12px;
+  border: 1px solid rgba(50, 50, 93, 0.1);
+  height: 44px;
+  font-size: 16px;
+  width: 100%;
+  background: white;
+} 
+
+
+
+ .hidden {
+  display: none;
+} 
+#card-error {
+  color: rgb(105, 115, 134);
+  text-align: left;
+  font-size: 13px;
+  line-height: 17px;
+  margin-top: 12px;
+}
+
+#card-element {
+  border-radius: 4px 4px 0 0 ;
+  padding: 12px;
+  border: 1px solid rgba(50, 50, 93, 0.1);
+  height: 44px;
+  width: 100%;
+  background: white;
+} 
+
+
+
+/* Buttons and links */
+button {
+  background: #5469d4;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  border-radius: 0 0 4px 4px;
+  border: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  transition: all 0.2s ease;
+  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+  width: 100%;
+}  
+
+</style>
 
 <nav
   class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"
@@ -26,7 +90,21 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Left -->
       <ul class="navbar-nav mr-auto">
-        
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="/">
+            <span class="clearfix d-none d-sm-inline-block"> home </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="{% url 'core:products-page' %}">
+            <span class="clearfix d-none d-sm-inline-block"> products </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="{% url 'core:about' %}">
+            <span class="clearfix d-none d-sm-inline-block"> about </span>
+          </a>
+        </li>
       </ul>
 
       <!-- Right -->
