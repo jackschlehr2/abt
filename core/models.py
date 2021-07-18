@@ -36,13 +36,13 @@ class UserProfile(models.Model):
 class Item(models.Model):
     title = models.CharField(max_length=100, default="default")
     price = models.FloatField(default=100.)
-    discount_price = models.FloatField(blank=True, null=True)
-    category = models.CharField(
-        choices=CATEGORY_CHOICES, default=CATEGORY_CHOICES[0], max_length=2)
-    label = models.CharField(choices=LABEL_CHOICES,
-                             default=LABEL_CHOICES[0], max_length=1)
     slug = models.SlugField(null=True)
     description = models.TextField(default="Default description")
+    size_small = models.IntegerField(default=0)
+    size_medium = models.IntegerField(default=0)
+    size_large = models.IntegerField(default=0)
+    size_extra_large = models.IntegerField(default=0)
+    image = models.ImageField(upload_to='static_in_env', blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -88,6 +88,18 @@ class OrderItem(models.Model):
             return self.get_total_discount_item_price()
         return self.get_total_item_price()
 
+    def get_item_price(self):
+        return self.item.price
+
+    def get_quantity(self):
+        return self.quantity
+
+    def get_name(self):
+        return self.item.title
+
+    def get_image(self):
+        return 'https://i.imgur.com/EHyR2nP.png'
+
 
 class Order(models.Model):
 
@@ -115,6 +127,12 @@ class Order(models.Model):
         for order_item in self.items.all():
             total += order_item.get_final_price()
         return total
+
+    def get_items(self):
+        items = []
+        for order_item in self.items.all():
+            items.append(order_item)
+        return items
 
 
 class Address(models.Model):
