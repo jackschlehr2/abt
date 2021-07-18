@@ -139,9 +139,20 @@ class HomeView(ListView):
     template_name = 'home.html'
 
 
+class ProductsView(ListView):
+    model = Item
+    paginate_by = 10
+    template_name = 'product_page.html'
+
+
 class ItemDetailView(DetailView):
     model = Item
     template_name = 'product.html'
+
+
+class AboutView(ListView):
+    model = Item
+    template_name = 'about.html'
 
 
 class OrderSummaryView(LoginRequiredMixin, View):
