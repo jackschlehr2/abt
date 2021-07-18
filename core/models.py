@@ -35,7 +35,7 @@ class UserProfile(models.Model):
 
 class Item(models.Model):
     title = models.CharField(max_length=100, default="default")
-    price = models.FloatField(default=100.)
+    price = models.IntegerField(default=100)
     slug = models.SlugField(null=True)
     description = models.TextField(default="Default description")
     size_small = models.IntegerField(default=0)
@@ -74,19 +74,8 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
 
-    def get_total_item_price(self):
-        return self.quantity * self.item.price
-
-    def get_discount_item_price(self):
-        return self.quantity * self.item.discount_price
-
-    def get_amount_saved(self):
-        return self.get_total_item_price() - self.get_discount_item_price()
-
     def get_final_price(self):
-        if self.item.discount_price:
-            return self.get_total_discount_item_price()
-        return self.get_total_item_price()
+        return self.quantity * self.item.price
 
     def get_item_price(self):
         return self.item.price
@@ -98,7 +87,7 @@ class OrderItem(models.Model):
         return self.item.title
 
     def get_image(self):
-        return 'https://i.imgur.com/EHyR2nP.png'
+        return self.item.image
 
 
 class Order(models.Model):
@@ -133,6 +122,12 @@ class Order(models.Model):
         for order_item in self.items.all():
             items.append(order_item)
         return items
+
+    def get_number_items(self):
+        count = 0
+        for order_item in self.items.all():
+            count += order_item.get_quantity()
+        return count
 
 
 class Address(models.Model):
