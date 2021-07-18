@@ -32,187 +32,47 @@ def is_valid_form(values):
     return valid
 
 
-class CheckoutView(View):
-    def get(self, *args, **kwargs):
-        try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
-            form = CheckoutForm()
-            context = {
-                'form': form,
-                'order': order,
-            }
+def create_checkout_session(request):
+    try:
+        order = Order.objects.get(user=request.user)
+        print(order.get_items())
+    except Exception as e:
+        print(e)
+    YOUR_DOMAIN = 'http://127.0.0.1:8000'
+    print(request.POST)
+    try:
+        line_items = []
+        for order_item in order.get_items():
+            line_items.append({
+                'price_data': {
+                    'currency': 'usd',
+                    'unit_amount': int(order_item.get_item_price())*100,
+                    'product_data': {
+                        'name': order_item.get_name(),
+                        'images': [order_item.get_image()],
 
-            shipping_address_qs = Address.objects.filter(
-                user=self.request.user,
-                address_type='S',
-            )
-            if shipping_address_qs.exists():
-                context.update(
-                    {'default_shipping_address': shipping_address_qs[0]})
-
-            billing_address_qs = Address.objects.filter(
-                user=self.request.user,
-                address_type='B',
-            )
-            if billing_address_qs.exists():
-                context.update(
-                    {'default_billing_address': billing_address_qs[0]})
-            return render(self.request, "checkout.html", context)
-        except ObjectDoesNotExist:
-            messages.info(self.request, "You do not have an active order")
-            return redirect("core:checkout")
-
-    def post(self, *args, **kwargs):
-        form = CheckoutForm(self.request.POST or None)
-        try:
-            if not form.is_valid():
-                print("err form")
-            order = Order.objects.get(user=self.request.user, ordered=False)
-            shipping_address1 = form.cleaned_data.get(
-                'shipping_address')
-            shipping_address2 = form.cleaned_data.get(
-                'shipping_address2')
-            shipping_zip = form.cleaned_data.get('shipping_zip')
-
-            if is_valid_form([shipping_address1, shipping_zip]):
-                print('valid')
-                shipping_address = Address(
-                    user=self.request.user,
-                    street_address=shipping_address1,
-                    apartment_address=shipping_address2,
-                    zip=shipping_zip,
-                    address_type='S'
-                )
-                shipping_address.save()
-
-                order.shipping_address = shipping_address
-                order.save()
-
-                set_default_shipping = form.cleaned_data.get(
-                    'set_default_shipping')
-                if set_default_shipping:
-                    shipping_address.default = True
-                    shipping_address.save()
-
-            else:
-                messages.info(
-                    self.request, "Please fill in the required shipping address fields")
-
-            same_billing_address = form.cleaned_data.get(
-                'same_billing_address')
-
-            if same_billing_address:
-                billing_address = shipping_address
-                billing_address.pk = None
-                billing_address.save()
-                billing_address.address_type = 'B'
-                billing_address.save()
-                order.billing_address = billing_address
-                order.save()
-
-            else:
-                print("User is entering a new billing address")
-                billing_address1 = form.cleaned_data.get(
-                    'billing_address')
-                billing_address2 = form.cleaned_data.get(
-                    'billing_address2')
-                billing_zip = form.cleaned_data.get('billing_zip')
-
-                if is_valid_form([billing_address1, billing_country, billing_zip]):
-                    billing_address = Address(
-                        user=self.request.user,
-                        street_address=billing_address1,
-                        apartment_address=billing_address2,
-                        zip=billing_zip,
-                        address_type='B'
-                    )
-                    billing_address.save()
-
-                    order.billing_address = billing_address
-                    order.save()
-
-                else:
-                    messages.info(
-                        self.request, "Please fill in the required billing address fields")
-
-            return redirect('core:payment')
-
-        except ObjectDoesNotExist:
-            messages.warning(self.request, "You do not have an active order")
-            return redirect("core:order-summary")
-
-
-class PaymentView(View):
-    model = Item
-    template_name = "payment.html"
-
-    def get(self, *args, **kwargs):
-        order = Order.objects.get(user=self.request.user, ordered=False)
-        if order.billing_address:
-            context = {
-                'order': order,
-                'DISPLAY_COUPON_FORM': False,
-                'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY
-            }
-            userprofile = self.request.user.userprofile
-            return render(self.request, "payment.html", context)
-        else:
-            messages.warning(
-                self.request, "You have not added a billing address")
-            return redirect("core:checkout")
-
-        return render(self.request, "payment.html")
-
-    # def post(self, *args, **kwargs):
-    #     # TODO fix this
-    #     YOUR_DOMAIN = "http://127.0.0.1:8000/"
-    #     product_id = self.kwargs["pk"]
-    #     product = Product.objects.get(id=product_id)
-    #     order = Order.objects.get(user=self.request.user, ordered=False)
-    #     form = PaymentForm(self.request.POST)
-    #     userprofile = UserProfile.objects.get(user=self.request.user)
-    #     checkout_session = stripe.checkout.Session.create(
-    #         payment_method_types=['card'],
-    #         line_items=[
-    #             {
-    #                 'price_data': {
-    #                     'currency': 'usd',
-    #                     'unit_amount': 2000,
-    #                     'product_data': {
-    #                         'name': 'Stubborn Attachments',
-    #                         'images': ['https://i.imgur.com/EHyR2nP.png'],
-    #                     },
-    #                 },
-    #                 'quantity': 1,
-    #             },
-    #         ],
-    #         metadata={
-    #             "product_id": product.id
-    #         },
-    #         mode='payment',
-    #         success_url=YOUR_DOMAIN + '/success.html',
-    #         cancel_url=YOUR_DOMAIN + '/cancel.html',
-    #     )
-
-    #     return JsonResponse({
-    #         'id': checkout_session.id,
-    #     })
-
-
-class StripeIntentView(View):
-    def post(self, request, *args, **kwargs):
-        try:
-            intent = stripe.PaymentIntent.create(
-                amount=10000,
-                currency='usd',
-            )
-            print(intent)
-            return JsonResponse({
-                'clientSecret': intent['client_secret']
+                    },
+                },
+                'quantity': order_item.get_quantity(),
             })
-        except Exception as e:
-            print(e)
-            return JsonResponse({'error': str(e)})
+
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            # tax_rate=['txr_1JDwWeFVzms5crHWOIT4FZNx'],
+            shipping_rates=['shr_1JDwVPFVzms5crHWCjcYKk16'],
+            shipping_address_collection={
+                'allowed_countries': ['US'],
+            },
+
+
+            line_items=line_items,
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success.html',
+            cancel_url=YOUR_DOMAIN + '/order-summary',
+        )
+        return redirect(checkout_session.url, code=303)
+    except Exception as e:
+        print(e)
 
 
 @csrf_exempt
@@ -294,10 +154,15 @@ class OrderSummaryView(LoginRequiredMixin, View):
             messages.error(self.request, "You do not have an active orderr")
             return redirect("/")
 
+    def get_order(user):
+        return Order.objects.get(user=user, ordered=False)
+
 
 @login_required
 def add_to_cart(request, slug):
+
     item = get_object_or_404(Item, slug=slug)
+    print(item)
     order_item, created = OrderItem.objects.get_or_create(
         item=item,
         user=request.user,
@@ -336,7 +201,7 @@ def remove_from_cart(request, slug):
                 user=request.user, item=item, ordered=False)[0]
             order.items.remove(order_item)
             messages.info(request, "this item was removed from your cart")
-            return redirect("core:order-summary", slug=slug)
+            return redirect("core:order-summary")
         else:
             messages.info(request, "this item was was not in your cart")
             return redirect("core:product", slug=slug)
@@ -356,6 +221,8 @@ def remove_single_item_from_cart(request, slug):
                 user=request.user, item=item, ordered=False)[0]
             order_item.quantity -= 1
             order_item.save()
+            if order_item.quantity == 0:
+                remove_from_cart(request, slug)
             messages.info(request, "this item quantity was updated")
             return redirect("core:order-summary")
         else:
