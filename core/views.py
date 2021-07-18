@@ -41,8 +41,10 @@ def create_checkout_session(request):
     YOUR_DOMAIN = 'http://127.0.0.1:8000'
     print(request.POST)
     try:
+
         line_items = []
         for order_item in order.get_items():
+            print(order_item.get_image())
             line_items.append({
                 'price_data': {
                     'currency': 'usd',
