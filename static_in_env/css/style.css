@@ -4,7 +4,9 @@ body,
 .view {
   height: 100%;
 }
-
+.none {
+  padding: 0;
+}
 /* Half Page Carousel itself*/
 .carousel {
   height: 50%;

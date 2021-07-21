@@ -43,6 +43,7 @@ class Item(models.Model):
     size_large = models.IntegerField(default=0)
     size_extra_large = models.IntegerField(default=0)
     image = models.ImageField(upload_to='static_in_env', blank=True, null=True)
+    selected_size = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -53,6 +54,7 @@ class Item(models.Model):
         })
 
     def get_add_to_cart_url(self):
+        print(self.request.GET.get('size'))
         return reverse("core:add-to-cart", kwargs={
             'slug': self.slug
         })
@@ -88,6 +90,9 @@ class OrderItem(models.Model):
 
     def get_image(self):
         return self.item.image
+
+    def get_size(self):
+        return self.item.selected_size
 
 
 class Order(models.Model):

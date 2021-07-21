@@ -44,7 +44,6 @@ def create_checkout_session(request):
 
         line_items = []
         for order_item in order.get_items():
-            print(order_item.get_image())
             line_items.append({
                 'price_data': {
                     'currency': 'usd',
@@ -52,7 +51,7 @@ def create_checkout_session(request):
                     'product_data': {
                         'name': order_item.get_name(),
                         'images': [order_item.get_image()],
-
+                        'size': order_item.get_size()
                     },
                 },
                 'quantity': order_item.get_quantity(),
@@ -175,7 +174,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
 def add_to_cart(request, slug):
 
     item = get_object_or_404(Item, slug=slug)
-    print(item)
+    print(item.selected_size)
     order_item, created = OrderItem.objects.get_or_create(
         item=item,
         user=request.user,
