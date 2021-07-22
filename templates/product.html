@@ -15,6 +15,9 @@
         <div class="p-4">
           <div class="mb-3"></div>
 
+          <p class="lead font-weight-bold">{{object.title}}</p>
+
+          <p>{{object.description}}</p>
           <p class="lead">
             <span>
               ${% if item.discount_price %}
@@ -27,10 +30,6 @@
               {% endif %}
             </span>
           </p>
-
-          <p class="lead font-weight-bold">{{object.title}}</p>
-
-          <p>{{object.description}}</p>
 
           <form
             style="all: unset"

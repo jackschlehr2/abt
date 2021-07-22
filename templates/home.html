@@ -1,22 +1,16 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% load static %} {% block content %}
+<main>
+  <div class="hero">
+    <img src="{% static 'banner.jpeg' %}" alt="" class="hero-img" />
 
-{% block content %}
-  <main>
-    <div class="container">
-
-
-      <!--Section: Products-->
-      <section class="text-center mb-4">
-
-        <div class="row wow fadeIn">
-
-          Home
-        </div>
-
-      </section>
-      
-
+    <div class="hero-content">
+      {% comment %}
+      <h1>
+        <span>connecing consumers with local charities</span>
+      </h1>
+      <a class="btn" href="#">shop now</a> {% endcomment %}
     </div>
-  </main>
+  </div>
+</main>
 
 {% endblock content %}

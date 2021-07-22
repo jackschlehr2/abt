@@ -54,17 +54,13 @@
               >
                 {% csrf_token %}
                 <input type="hidden" name="user" value="{{object}}" />
-                <button class="btn btn-warning float-right ml-2" type="submit">
+                <button
+                  class="btn btn-warning float-right ml-2 stripe"
+                  type="submit"
+                >
                   Checkout
                 </button>
               </form>
-              {% comment %}
-              <a
-                class="btn btn-warning float-right ml-2"
-                href="/create-checkout-session"
-                >Proceed to checkout</a
-              >
-              {% endcomment %}
               <a class="btn btn-primary float-right" href="/"
                 >Continue shopping</a
               >

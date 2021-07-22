@@ -1,31 +1,42 @@
-/* Required height of parents of the Half Page Carousel for proper displaying carousel itself */
 html,
 body,
 .view {
   height: 100%;
 }
-.none {
+*,
+*::before,
+*::after {
+  margin: 0;
   padding: 0;
+  box-sizing: inherit;
 }
-/* Half Page Carousel itself*/
-.carousel {
-  height: 50%;
-}
-.carousel .carousel-inner {
-  height: 100%;
-}
-.carousel .carousel-inner .carousel-item,
-.carousel .carousel-inner .active {
-  height: 100%;
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-size: 62.5%;
 }
 
-/* Adjustment for mobile devices*/
-@media (max-width: 776px) {
-  .carousel {
-    height: 100%;
-  }
+body {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  background-color: #fff;
+  color: #243a6f;
+  position: relative;
+  z-index: 1;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 500;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
 /* Footer color for sake of consistency with Navbar */
 .page-footer {
   background-color: #929fba;
@@ -87,8 +98,7 @@ input {
   margin-bottom: 32px;
 }
 
-/* Buttons and links */
-button {
+button .stripe {
   background: #5469d4;
   color: #ffffff;
   font-family: Arial, sans-serif;
@@ -158,4 +168,286 @@ button:disabled {
   transform-origin: 0px 10.2px;
   -webkit-animation: loading 2s infinite ease;
   animation: loading 2s infinite ease;
+}
+img {
+  max-width: 100%;
+}
+ul {
+  /* to override bootstraps default of 1rem*/
+  margin-bottom: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+#bootstrap-override .container {
+  max-width: 120rem;
+  margin: 0 auto;
+}
+
+#bootstrap-override .container-md {
+  max-width: 100rem;
+  margin: 0 auto;
+}
+@media only screen and (max-width: 1200px) {
+  #bootstrap-override .container {
+    padding: 0 3rem;
+  }
+
+  #bootstrap-override .container-md {
+    padding: 0 3rem;
+  }
+}
+
+/* Header */
+.header {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--grey-alt);
+  overflow: hidden;
+}
+
+#bootstrap-override.nav {
+  padding: 1.6rem 0;
+  max-height: 5rem;
+  align-content: center;
+}
+
+#bootstrap-override.nav.fix-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #243a6f;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+#bootstrap-override.nav.fix-nav .nav-link,
+#bootstrap-override.nav.fix-nav .logo,
+#bootstrap-override.nav.fix-nav .cart-icon,
+#bootstrap-override.nav.fix-nav .hamburger {
+  color: #fff;
+}
+
+#bootstrap-override .navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#bootstrap-override .logo h1 {
+  font-size: 2.5rem;
+}
+
+#bootstrap-override .nav-list {
+  display: flex;
+  align-items: center;
+}
+
+#bootstrap-override .nav-item:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+#bootstrap-override .nav-link:link,
+.nav-link:visited {
+  padding: 0.8rem 1rem;
+  transition: all 300ms ease-in-out;
+}
+
+#bootstrap-override .nav-link.icon {
+  font-size: 3rem;
+}
+
+#bootstrap-override .top-nav {
+  display: none;
+}
+
+#bootstrap-override .hamburger {
+  display: none;
+}
+
+#bootstrap-override .cart-icon {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  #bootstrap-override .menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 40rem;
+    height: 100%;
+    background-color: #fff;
+    transition: all 500ms ease-in-out;
+    z-index: 100;
+  }
+
+  #bootstrap-override .menu.show {
+    left: 0;
+  }
+
+  #bootstrap-override .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #243a6f;
+    padding: 1rem 1.6rem;
+  }
+
+  #bootstrap-override .top-nav .logo {
+    color: #fff;
+  }
+
+  #bootstrap-override .top-nav .close {
+    color: #fff;
+    font-size: 3rem;
+    padding: 1rem;
+    cursor: pointer;
+  }
+
+  #bootstrap-override .cart-icon {
+    display: block;
+    font-size: 3rem;
+  }
+
+  #bootstrap-override .hamburger {
+    display: block;
+    font-size: 3rem;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  #bootstrap-override .nav-link:link,
+  #bootstrap-override .nav-link:visited {
+    display: block;
+    font-size: 1.7rem;
+    padding: 1rem 0;
+  }
+
+  #bootstrap-override.nav.fix-nav .nav-link {
+    color: #243a6f;
+  }
+
+  #bootstrap-override .nav-list {
+    flex-direction: column;
+    align-items: start;
+    padding: 1rem 1.6rem;
+  }
+
+  #bootstrap-override body.show::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.39);
+    z-index: 4;
+  }
+
+  #bootstrap-override.nav.show {
+    background-color: rgba(0, 0, 0, 0.39);
+  }
+
+  #bootstrap-override .nav-link.icon {
+    display: none;
+  }
+}
+/* Hero */
+.header .hero-img {
+  position: absolute;
+  bottom: -10%;
+  right: -5%;
+  height: 70rem;
+  object-fit: contain;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  transform: translate(25%, -50%);
+}
+
+.hero-content h2 {
+  color: black;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero-content h1 span {
+  color: black;
+  font-size: 2rem;
+  font-weight: 700;
+  display: block;
+  line-height: 1;
+}
+
+@media only screen and (max-width: 1200px) {
+  .header .hero-img {
+    right: -20%;
+  }
+
+  .hero-content {
+    transform: translate(20%, -50%);
+  }
+
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+
+  .hero-content h1 span {
+    font-size: 5rem;
+  }
+}
+
+@media only screen and (max-width: 996px) {
+  .header {
+    min-height: 70vh;
+  }
+
+  .header .hero-img {
+    height: 40rem;
+    right: -10%;
+  }
+}
+
+@media only screen and (max-width: 567px) {
+  .header {
+    min-height: 100vh;
+  }
+
+  .header .hero-img {
+    height: 40rem;
+    bottom: -15%;
+  }
+
+  .hero-content {
+    top: 40%;
+    transform: translate(15%, -50%);
+  }
+
+  .header .hero-img {
+    right: 0%;
+  }
+
+  .hero-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content h1 span {
+    font-size: 2rem;
+  }
+
+  .hero-content a {
+    padding: 1rem 3rem;
+  }
 }
