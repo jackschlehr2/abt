@@ -1,57 +1,47 @@
 {% load cart_template_tags %}
 
 
-<nav
-  class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"
->
-  <div class="container">
+ <nav class="nav" id="bootstrap-override">
+  <div class="navigation container">
     <!-- Brand -->
-    <a class="navbar-brand waves-effect" href="/">
-      <strong class="text">a better tomorrow.</strong>
-    </a>
+    <div class="logo">
+      <a class="waves-effect" href="/">
+        <strong class="text">a better tomorrow.</strong>
+      </a>
+    </div>
 
-    <!-- Collapse -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    
 
     <!-- Links -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Left -->
-      <ul class="navbar-nav mr-auto">
+    <div class="menu">
+      <div class="top-nav">
+          <div class="logo">
+            <a class="waves-effect" href="/">
+              <strong class="text">a better tomorrow.</strong>
+            </a>
+          </div>
+          <div class="close">
+            <i class="fas fa-times"></i>
+          </div>
+        </div>
+      <!-- navbar -->
+      <ul class="nav-list">
         <li class="nav-item">
-          <a class="nav-link waves-effect" href="/">
-            <span class="clearfix d-none d-sm-inline-block"> home </span>
-          </a>
+          <a class="nav-link waves-effect" href="/">home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link waves-effect" href="{% url 'core:products-page' %}">
-            <span class="clearfix d-none d-sm-inline-block"> products </span>
-          </a>
+          <a class="nav-link waves-effect" href="{% url 'core:products-page' %}">products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link waves-effect" href="{% url 'core:about' %}">
-            <span class="clearfix d-none d-sm-inline-block"> about </span>
-          </a>
+          <a class="nav-link waves-effect" href="{% url 'core:about' %}">about</a>
         </li>
-      </ul>
-
-      <!-- Right -->
-      <ul class="navbar-nav nav-flex-icons">
+         <!-- cart and signin/signup -->
         {% if request.user.is_authenticated %}
         <li class="nav-item">
           <a href="{% url "core:order-summary"   %}" class="nav-link waves-effect">
-            <span class="badge blue z-depth-1 mr-1">
+            
               {{ request.user|cart_item_count }}
-            </span>
+            
             <i class="fas fa-shopping-cart"></i>
             <span class="clearfix d-none d-sm-inline-block">     </span>
           </a>
@@ -74,6 +64,79 @@
         </li>
         {% endif %}
       </ul>
-    </div>
+      </div>
+      <div class="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+    
   </div>
-</nav>
+
+</nav> 
+
+
+
+<script>
+const menu = document.querySelector(".menu");
+const navOpen = document.querySelector(".hamburger");
+const navClose = document.querySelector(".close");
+
+const navLeft = menu.getBoundingClientRect().left;
+navOpen.addEventListener("click", () => {
+  if (navLeft < 0) {
+    menu.classList.add("show");
+    document.body.classList.add("show");
+    navBar.classList.add("show");
+  }
+});
+
+navClose.addEventListener("click", () => {
+  if (navLeft < 0) {
+    menu.classList.remove("show");
+    document.body.classList.remove("show");
+    navBar.classList.remove("show");
+  }
+});
+
+// Fixed Nav
+const navBar = document.querySelector(".nav");
+const navHeight = navBar.getBoundingClientRect().height;
+window.addEventListener("scroll", () => {
+  const scrollHeight = window.pageYOffset;
+  if (scrollHeight > navHeight) {
+    navBar.classList.add("fix-nav");
+  } else {
+    navBar.classList.remove("fix-nav");
+  }
+});
+// Scroll To
+const links = [...document.querySelectorAll(".scroll-link")];
+links.map(link => {
+  if (!link) return;
+  link.addEventListener("click", e => {
+    e.preventDefault();
+
+    const id = e.target.getAttribute("href").slice(1);
+
+    const element = document.getElementById(id);
+    const fixNav = navBar.classList.contains("fix-nav");
+    let position = element.offsetTop - navHeight;
+
+    window.scrollTo({
+      top: position,
+      left: 0,
+    });
+
+    navBar.classList.remove("show");
+    menu.classList.remove("show");
+    document.body.classList.remove("show");
+  });
+});
+
+gsap.from(".logo", { opacity: 0, duration: 1, delay: 0.5, y: -10 });
+gsap.from(".hamburger", { opacity: 0, duration: 1, delay: 1, x: 20 });
+gsap.from(".hero-img", { opacity: 0, duration: 1, delay: 1.5, x: -200 });
+gsap.from(".hero-content h2", { opacity: 0, duration: 1, delay: 2, y: -50 });
+gsap.from(".hero-content h1", { opacity: 0, duration: 1, delay: 2.5, y: -45 });
+gsap.from(".hero-content a", { opacity: 0, duration: 1, delay: 3.5, y: 50 });
+
+</script>

@@ -54,7 +54,7 @@ class Item(models.Model):
         })
 
     def get_add_to_cart_url(self):
-        print(self.request.GET.get('size'))
+        # print(self.request.GET.get('size'))
         return reverse("core:add-to-cart", kwargs={
             'slug': self.slug
         })

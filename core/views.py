@@ -51,7 +51,7 @@ def create_checkout_session(request):
                     'product_data': {
                         'name': order_item.get_name(),
                         'images': [order_item.get_image()],
-                        'size': order_item.get_size()
+                        # 'size': order_item.get_size()
                     },
                 },
                 'quantity': order_item.get_quantity(),
