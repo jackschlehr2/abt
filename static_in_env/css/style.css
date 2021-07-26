@@ -171,6 +171,7 @@ button:disabled {
 }
 img {
   max-width: 100%;
+  width: 100%;
 }
 ul {
   /* to override bootstraps default of 1rem*/
@@ -190,11 +191,10 @@ li {
   margin: 0 auto;
 }
 
-#bootstrap-override .container-md {
-  max-width: 100rem;
-  margin: 0 auto;
-}
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1500px) {
+  #bootstrap-override.nav {
+    width: 100%;
+  }
   #bootstrap-override .container {
     padding: 0 3rem;
   }
@@ -217,6 +217,8 @@ li {
   padding: 1.6rem 0;
   max-height: 5rem;
   align-content: center;
+  position: absolute;
+  width: 100%;
 }
 
 #bootstrap-override.nav.fix-nav {
@@ -234,21 +236,24 @@ li {
 #bootstrap-override.nav.fix-nav .cart-icon,
 #bootstrap-override.nav.fix-nav .hamburger {
   color: #fff;
+  font-weight: 500;
 }
 
 #bootstrap-override .navigation {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: white;
 }
 
-#bootstrap-override .logo h1 {
-  font-size: 2.5rem;
+#bootstrap-override .logo {
+  font-size: x-large;
 }
 
-#bootstrap-override .nav-list {
+#bootstrap-override .navigation .nav-list {
   display: flex;
   align-items: center;
+  font-size: x-large;
 }
 
 #bootstrap-override .nav-item:not(:last-child) {
@@ -277,6 +282,10 @@ li {
   display: none;
 }
 
+#bootstrap-override > div {
+  color: white;
+}
+
 @media only screen and (max-width: 768px) {
   #bootstrap-override .menu {
     position: fixed;
@@ -288,6 +297,7 @@ li {
     background-color: #fff;
     transition: all 500ms ease-in-out;
     z-index: 100;
+    color: #243a6f;
   }
 
   #bootstrap-override .menu.show {
@@ -362,6 +372,16 @@ li {
   }
 }
 /* Hero */
+
+main#home {
+  padding-top: 0;
+}
+
+main#home .hero .hero-content {
+  position: absolute;
+  top: 40%;
+  left: 10%;
+}
 .header .hero-img {
   position: absolute;
   bottom: -10%;
@@ -370,25 +390,13 @@ li {
   object-fit: contain;
 }
 
-.hero-content {
-  position: absolute;
-  top: 50%;
-  transform: translate(25%, -50%);
-}
-
-.hero-content h2 {
-  color: black;
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.hero-content h1 span {
+main#home .hero .hero-content h1 span {
   color: black;
   font-size: 2rem;
   font-weight: 700;
   display: block;
   line-height: 1;
+  color: white;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -396,16 +404,16 @@ li {
     right: -20%;
   }
 
-  .hero-content {
-    transform: translate(20%, -50%);
+  main#home .hero .hero-content {
+    /* transform: translate(20%, -50%); */
   }
 
   .hero-content h2 {
     font-size: 2rem;
   }
 
-  .hero-content h1 span {
-    font-size: 5rem;
+  main#home .hero .hero-content h1 span {
+    font-size: 2rem;
   }
 }
 
@@ -430,24 +438,59 @@ li {
     bottom: -15%;
   }
 
-  .hero-content {
+  main#home .hero .hero-content {
     top: 40%;
-    transform: translate(15%, -50%);
+    /* transform: translate(15%, -50%); */
   }
 
   .header .hero-img {
     right: 0%;
   }
 
-  .hero-content h2 {
+  main#home .hero .hero-content h2 {
     font-size: 1.8rem;
   }
 
-  .hero-content h1 span {
+  main#home .hero .hero-content h1 span {
     font-size: 2rem;
   }
 
-  .hero-content a {
+  main#home .hero .hero-content a {
     padding: 1rem 3rem;
   }
+}
+
+#footer .footer-copyright {
+  font-size: 1.25rem;
+}
+
+#mission {
+  margin: 2rem;
+}
+
+#mission .container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+#mission .statement {
+  max-width: 500px;
+}
+#mission .picture {
+  max-width: 500px;
+  margin: 3rem;
+}
+
+@media only screen and(max-width: 996px) {
+  #mission .container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+main {
+  background-color: rgba(84, 107, 121, 0.411);
+  padding-top: 70px;
+  z-index: -1;
 }

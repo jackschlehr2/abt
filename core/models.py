@@ -43,7 +43,6 @@ class Item(models.Model):
     size_large = models.IntegerField(default=0)
     size_extra_large = models.IntegerField(default=0)
     image = models.ImageField(upload_to='static_in_env', blank=True, null=True)
-    selected_size = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -54,9 +53,10 @@ class Item(models.Model):
         })
 
     def get_add_to_cart_url(self):
-        # print(self.request.GET.get('size'))
+        print('hello')
         return reverse("core:add-to-cart", kwargs={
-            'slug': self.slug
+            'slug': self.slug,
+            'size': 1
         })
 
     def get_remove_cart_url(self):
@@ -72,9 +72,10 @@ class OrderItem(models.Model):
     item = models.ForeignKey(
         Item, on_delete=models.CASCADE, blank=True, null=True)
     quantity = models.IntegerField(default=1)
+    selected_size = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.quantity} of {self.item.title}"
+        return f"{self.quantity} of {self.selected_size} {self.item.title}"
 
     def get_final_price(self):
         return self.quantity * self.item.price
@@ -92,7 +93,13 @@ class OrderItem(models.Model):
         return self.item.image
 
     def get_size(self):
-        return self.item.selected_size
+        switcher = {
+            0: 'S',
+            1: 'M',
+            2: 'L',
+            3: 'XL'
+        }
+        return switcher.get(self.selected_size, "invalid size")
 
 
 class Order(models.Model):
@@ -103,15 +110,9 @@ class Order(models.Model):
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now=True, blank=True)
     ordered_date = models.DateTimeField(auto_now=True, blank=True)
-    ordered = models.BooleanField(default=False)
-    shipping_address = models.ForeignKey(
-        'Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
-    billing_address = models.ForeignKey(
-        'Address', on_delete=models.SET_NULL, blank=True, null=True)
-    payment = models.ForeignKey(
-        'Payment', on_delete=models.SET_NULL, blank=True, null=True)
     being_delivered = models.BooleanField(default=False)
     received = models.BooleanField(default=False)
+    ordered = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

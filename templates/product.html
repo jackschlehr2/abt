@@ -36,13 +36,15 @@
             action="{{ object.get_add_to_cart_url }}"
             method="GET"
           >
+            {% comment %}
             <select id="size" name="size" required>
               <option value="none" selected disabled hidden>select size</option>
-              <option value="small">small</option>
-              <option value="medium">medium</option>
-              <option value="large">large</option>
-              <option value="extralarge">extra large</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
             </select>
+            {% endcomment %}
             <button class="btn btn-primary btn-md my-0 p">
               Add to cart
               <i class="fas fa-shopping-cart ml-1"></i>

@@ -16,7 +16,7 @@
           {% for order_item in object.items.all %}
           <tr>
             <td style="word-break: break-all">{{ order_item.item.title }}</td>
-            <td>{{ order_item.item.selected_size }}</td>
+            <td>{{ order_item.get_size }}</td>
             <td>$ {{ order_item.item.price }}</td>
             <td>
               <a
@@ -24,14 +24,15 @@
                 ><i class="fas fa-minus mr-2"></i
               ></a>
               {{ order_item.quantity }}
-              <a href="{% url 'core:add-to-cart' order_item.item.slug %}"
+              <a
+                href="{% url 'core:add-to-cart' order_item.item.slug order_item.selected_size %}"
                 ><i class="fas fa-plus ml-2"></i
               ></a>
             </td>
           </tr>
           {% empty %}
           <tr>
-            <td colspan="5">Your cart is empty</td>
+            <td colspan="4">Your cart is empty</td>
           </tr>
           <tr>
             <td colspan="5">
@@ -42,11 +43,11 @@
           </tr>
           {% endfor %} {% if object.get_total %}
           <tr>
-            <td colspan="2"><b>Order Total</b></td>
+            <td colspan="3"><b>Order Total</b></td>
             <td><b>${{ object.get_total }}</b></td>
           </tr>
           <tr>
-            <td colspan="5">
+            <td colspan="4">
               <form
                 style="all: unset"
                 action="/create-checkout-session"
