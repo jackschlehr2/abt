@@ -158,6 +158,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *arg, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
+            print(order.get_items())
             context = {
                 'object': order
             }
@@ -171,20 +172,25 @@ class OrderSummaryView(LoginRequiredMixin, View):
 
 
 @login_required
-def add_to_cart(request, slug):
-
+def add_to_cart(request, slug, size=0):
+    try:
+        size = int(request.GET.get('size'))
+    except Exception as e:
+        print(e)
+        print('Invalid size')
     item = get_object_or_404(Item, slug=slug)
-    print(item.selected_size)
+
     order_item, created = OrderItem.objects.get_or_create(
         item=item,
         user=request.user,
-        ordered=False
+        ordered=False,
+        selected_size=size
     )
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
         # check if the order item is in the order
-        if order.items.filter(item__slug=item.slug).exists():
+        if order.items.filter(item__slug=item.slug, selected_size=size).exists():
             order_item.quantity += 1
             order_item.save()
             messages.info(request, "This item quantity was updated.")
@@ -202,7 +208,7 @@ def add_to_cart(request, slug):
         return redirect("core:order-summary")
 
 
-@login_required
+@ login_required
 def remove_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
@@ -222,7 +228,7 @@ def remove_from_cart(request, slug):
         return redirect("core:product", slug=slug)
 
 
-@login_required
+@ login_required
 def remove_single_item_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_qs = Order.objects.filter(user=request.user, ordered=False)

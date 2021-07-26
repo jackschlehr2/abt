@@ -1,15 +1,39 @@
 {% extends "base.html" %} {% load static %} {% block content %}
-<main>
+<main id="home">
   <div class="hero">
-    <img src="{% static 'banner.jpeg' %}" alt="" class="hero-img" />
-
+    <img src="{% static 'bannerwide.jpeg' %}" alt="" class="hero-img" />
     <div class="hero-content">
-      {% comment %}
       <h1>
-        <span>connecing consumers with local charities</span>
+        <span>connecing consumers </span>
+        <span>with local charities </span>
       </h1>
-      <a class="btn" href="#">shop now</a> {% endcomment %}
+      <a class="btn" href="#">read more</a>
     </div>
+  </div>
+
+  <section id="mission">
+  <div class="container">
+    
+    <div class="statement">
+      <h1>our mission</h1>
+      <p>
+        Our mission is to raise awareness and address global issues through
+        fashion and action. At a better tomorrow, we value transparency, action,
+        and the idea that every act of good helps, no matter how small. We address
+        prevalent social issues by relating a charity/organization/unified effort
+        to each release of clothes and donate 51% of profits to the organization.
+        For our current release, we will donate to the Miami Rescue Mission in
+        Miami, FL. First, the money donated would allow the organization to
+        continue to fund and expand their operations to help out their community
+        in South Bend. Also, this will raise awareness so we can lead a more
+        unified effort to help. Finally, we aim to turn the nation away from fast
+        fashion and would like to promote more sustainable clothing options.
+      </p>
+    </div>
+    <div class="picture">
+      <img src="{% static 'sbhs.png' %}" alt="" class="img" />
+    </div>
+  </section>
   </div>
 </main>
 
