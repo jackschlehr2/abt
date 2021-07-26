@@ -31,25 +31,18 @@
             </span>
           </p>
 
-          <form
-            style="all: unset"
-            action="{{ object.get_add_to_cart_url }}"
-            method="GET"
-          >
-            {% comment %}
-            <select id="size" name="size" required>
-              <option value="none" selected disabled hidden>select size</option>
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-            {% endcomment %}
-            <button class="btn btn-primary btn-md my-0 p">
-              Add to cart
-              <i class="fas fa-shopping-cart ml-1"></i>
-            </button>
-          </form>
+          <select id="size_selector" name="size" required>
+            <option value="none" selected disabled hidden>select size</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+
+          <button id="button" class="btn btn-primary btn-md my-0 p">
+            Add to cart
+            <i class="fas fa-shopping-cart ml-1"></i>
+          </button>
         </div>
         <!--Content-->
       </div>
@@ -57,6 +50,26 @@
     </div>
     <!--Grid row-->
   </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>
+    var token = "{{ csrf_token }}";
+    const button = document.querySelector("#button");
+    button.addEventListener("click", () => {
+      var serializedData = $("select").serialize();
+      $.ajax({
+        headers: { "X-CSRFToken": token },
+        type: "POST",
+        url: "{% url 'core:product' item.slug %}",
+        data: serializedData,
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (response) {
+          alert(response["responseJSON"]["error"]);
+        },
+      });
+    });
+  </script>
 </main>
 <!--Main layout-->
 

@@ -148,6 +148,14 @@ class ItemDetailView(DetailView):
     model = Item
     template_name = 'product.html'
 
+    # def get(self, *args, **kwargs):
+    #     return render(self.request, self.template_name)
+
+    def post(self, *args, **kwargs):
+        if self.request.is_ajax and self.request.method == "POST":
+            print('got request')
+            return JsonResponse({"error": ""}, status=200)
+
 
 class AboutView(ListView):
     model = Item
@@ -171,7 +179,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
         return Order.objects.get(user=user, ordered=False)
 
 
-@login_required
+@ login_required
 def add_to_cart(request, slug, size=0):
     try:
         size = int(request.GET.get('size'))
