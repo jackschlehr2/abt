@@ -148,20 +148,14 @@ class ItemDetailView(DetailView):
     model = Item
     template_name = 'product.html'
 
-    # def get(self, *args, **kwargs):
-    #     return render(self.request, self.template_name)
-
     def post(self, *args, **kwargs):
         if self.request.is_ajax and self.request.method == "POST":
             size = self.request.POST.get('size')
             slug = kwargs['slug']
             (success, message) = add_item_to_cart(
                 self.request, slug, size)
-            if message != "":
-                messages.info(self.request, message)
             if not success:
                 return JsonResponse({"error": ""}, status=200)
-            redirect("core:order-summary")
             return JsonResponse({"success": ""}, status=200)
 
 
@@ -211,8 +205,7 @@ def get_inventory(request, slug):
 @ login_required
 def add_to_cart(request, slug, size=0):
     (success, message) = add_item_to_cart(request, slug, size)
-    if message != "":
-        messages.info(request, message)
+
     return redirect("core:order-summary")
 
 
