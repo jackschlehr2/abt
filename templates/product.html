@@ -71,7 +71,7 @@
         url: "{% url 'core:product' item.slug %}",
         data: serializedData,
         success: function (response) {
-          console.log(response);
+          document.location.href = "{% url 'core:order-summary' %}";
         },
         error: function (response) {
           alert(response["responseJSON"]["error"]);
