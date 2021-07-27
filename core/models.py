@@ -53,10 +53,8 @@ class Item(models.Model):
         })
 
     def get_add_to_cart_url(self):
-        print('hello')
         return reverse("core:add-to-cart", kwargs={
             'slug': self.slug,
-            'size': 1
         })
 
     def get_remove_cart_url(self):

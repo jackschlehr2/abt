@@ -2,7 +2,6 @@ import stripe
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib import messages
 from django.views.generic import ListView, DetailView, View
 from .models import Item, Order, OrderItem, Address, Payment, UserProfile
 from django.utils import timezone
@@ -152,8 +151,7 @@ class ItemDetailView(DetailView):
         if self.request.is_ajax and self.request.method == "POST":
             size = self.request.POST.get('size')
             slug = kwargs['slug']
-            (success, message) = add_item_to_cart(
-                self.request, slug, size)
+            success = add_item_to_cart(self.request, slug, size)
             if not success:
                 return JsonResponse({"error": ""}, status=200)
             return JsonResponse({"success": ""}, status=200)
@@ -174,7 +172,6 @@ class OrderSummaryView(LoginRequiredMixin, View):
             }
             return render(self.request, 'order_summary.html', context)
         except ObjectDoesNotExist:
-            messages.error(self.request, "You do not have an active orderr")
             return redirect("/")
 
     def get_order(user):
@@ -203,13 +200,18 @@ def get_inventory(request, slug):
 
 
 @ login_required
-def add_to_cart(request, slug, size=0):
-    (success, message) = add_item_to_cart(request, slug, size)
-
+def add_to_cart(request, slug, size):
+    success = change_quantity(request, slug, size, 1)
     return redirect("core:order-summary")
 
 
-def add_item_to_cart(request, slug, size):
+@ login_required
+def remove_single_item_from_cart(request, slug, size):
+    success = change_quantity(request, slug, size, -1)
+    return redirect("core:order-summary")
+
+
+def change_quantity(request, slug, size, quantity):
     try:
         size = int(request.GET.get('size'))
     except Exception as e:
@@ -227,59 +229,15 @@ def add_item_to_cart(request, slug, size):
         order = order_qs[0]
         # check if the order item is in the order
         if order.items.filter(item__slug=item.slug, selected_size=size).exists():
-            order_item.quantity += 1
+            order_item.quantity += quantity
             order_item.save()
-            message = "This item quantity was updated."
+            if order_item.quantity == 0:
+                order.items.remove(order_item)
         else:
             order.items.add(order_item)
-            message = "This item was added to your cart."
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
-        message = "This item was added to your cart."
-    return (True, message)
-
-
-@ login_required
-def remove_from_cart(request, slug):
-    item = get_object_or_404(Item, slug=slug)
-    order_qs = Order.objects.filter(user=request.user, ordered=False)
-    if order_qs.exists():
-        order = order_qs[0]
-        if order.items.filter(item__slug=item.slug).exists():
-            order_item = OrderItem.objects.filter(
-                user=request.user, item=item, ordered=False)[0]
-            order.items.remove(order_item)
-            messages.info(request, "this item was removed from your cart")
-            return redirect("core:order-summary")
-        else:
-            messages.info(request, "this item was was not in your cart")
-            return redirect("core:product", slug=slug)
-    else:
-        messages.info(request, "You do not have an active order")
-        return redirect("core:product", slug=slug)
-
-
-@ login_required
-def remove_single_item_from_cart(request, slug):
-    item = get_object_or_404(Item, slug=slug)
-    order_qs = Order.objects.filter(user=request.user, ordered=False)
-    if order_qs.exists():
-        order = order_qs[0]
-        if order.items.filter(item__slug=item.slug).exists():
-            order_item = OrderItem.objects.filter(
-                user=request.user, item=item, ordered=False)[0]
-            order_item.quantity -= 1
-            order_item.save()
-            if order_item.quantity == 0:
-                remove_from_cart(request, slug)
-            messages.info(request, "this item quantity was updated")
-            return redirect("core:order-summary")
-        else:
-            messages.info(request, "this item was was not in your cart")
-            return redirect("core:product", slug=slug)
-    else:
-        messages.info(request, "You do not have an active order")
-        return redirect("core:product", slug=slug)
+    return True
