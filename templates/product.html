@@ -31,7 +31,12 @@
             </span>
           </p>
 
-          <select id="size_selector" name="size" required>
+          <select
+            id="size_selector"
+            name="size"
+            required
+            onchange="size_selected(this)"
+          >
             <option value="none" selected disabled hidden>select size</option>
             <option value="0">0</option>
             <option value="1">1</option>
@@ -69,6 +74,10 @@
         },
       });
     });
+
+    function size_selected(obj) {
+      var size = obj.value;
+    }
   </script>
 </main>
 <!--Main layout-->

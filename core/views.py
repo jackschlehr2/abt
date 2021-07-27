@@ -179,6 +179,27 @@ class OrderSummaryView(LoginRequiredMixin, View):
         return Order.objects.get(user=user, ordered=False)
 
 
+def get_inventory(request, slug):
+    if request.is_ajax and request.method == "GET":
+        item = get_object_or_404(Item, slug=slug)
+        selected_size = request.GET.get("size", None)
+        if selected_size == None:
+            selected_size = -1
+        else:
+            selected_size = int(selected_size)
+        if selected_size == 0 and item.size_small > 0:
+            return JsonResponse({"in_stock": True}, status=200)
+        elif selected_size == 1 and item.size_medium > 0:
+            return JsonResponse({"in_stock": True}, status=200)
+        elif selected_size == 2 and item.size_large > 0:
+            return JsonResponse({"in_stock": True}, status=200)
+        elif selected_size == 3 and item.size_extra_large > 0:
+            return JsonResponse({"in_stock": True}, status=200)
+        else:
+            return JsonResponse({"in_stock": False}, status=200)
+    return JsonResponse({}, status=400)
+
+
 @ login_required
 def add_to_cart(request, slug, size=0):
     try:
