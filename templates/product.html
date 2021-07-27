@@ -38,15 +38,18 @@
             onchange="size_selected(this)"
           >
             <option value="none" selected disabled hidden>select size</option>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+            <option value="0">S</option>
+            <option value="1">M</option>
+            <option value="2">L</option>
+            <option value="3">XL</option>
           </select>
 
-          <button id="button" class="btn btn-primary btn-md my-0 p">
-            Add to cart
+          <button id="add_to_cart" class="btn btn-primary btn-md my-0 p">
+            add to cart
             <i class="fas fa-shopping-cart ml-1"></i>
+          </button>
+          <button id="sold_out" class="btn btn-danger btn-md my-0 p">
+            sold out
           </button>
         </div>
         <!--Content-->
@@ -57,8 +60,9 @@
   </div>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script>
+    $("#sold_out").hide();
     var token = "{{ csrf_token }}";
-    const button = document.querySelector("#button");
+    const button = document.querySelector("#add_to_cart");
     button.addEventListener("click", () => {
       var serializedData = $("select").serialize();
       $.ajax({
@@ -77,6 +81,27 @@
 
     function size_selected(obj) {
       var size = obj.value;
+      var serializedData = $("select").serialize();
+      $.ajax({
+        headers: { "X-CSRFToken": token },
+        type: "GET",
+        url: "{% url 'core:get-inventory' item.slug %}",
+        data: serializedData,
+        success: function (response) {
+          if (response["in_stock"]) {
+            $("#add_to_cart").show();
+            $("#sold_out").hide();
+          } else {
+            $("#sold_out").show();
+            $("#add_to_cart").hide();
+          }
+          console.log(response["in_stock"]);
+        },
+        error: function (response) {
+          alert(response["responseJSON"]["error"]);
+        },
+      });
+      console.log("sent");
     }
   </script>
 </main>

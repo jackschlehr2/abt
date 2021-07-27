@@ -153,7 +153,6 @@ class ItemDetailView(DetailView):
 
     def post(self, *args, **kwargs):
         if self.request.is_ajax and self.request.method == "POST":
-            print('got request')
             return JsonResponse({"error": ""}, status=200)
 
 
