@@ -153,7 +153,16 @@ class ItemDetailView(DetailView):
 
     def post(self, *args, **kwargs):
         if self.request.is_ajax and self.request.method == "POST":
-            return JsonResponse({"error": ""}, status=200)
+            size = self.request.POST.get('size')
+            slug = kwargs['slug']
+            (success, message) = add_item_to_cart(
+                self.request, slug, size)
+            if message != "":
+                messages.info(self.request, message)
+            if not success:
+                return JsonResponse({"error": ""}, status=200)
+            redirect("core:order-summary")
+            return JsonResponse({"success": ""}, status=200)
 
 
 class AboutView(ListView):
@@ -201,11 +210,17 @@ def get_inventory(request, slug):
 
 @ login_required
 def add_to_cart(request, slug, size=0):
+    (success, message) = add_item_to_cart(request, slug, size)
+    if message != "":
+        messages.info(request, message)
+    return redirect("core:order-summary")
+
+
+def add_item_to_cart(request, slug, size):
     try:
         size = int(request.GET.get('size'))
     except Exception as e:
-        print(e)
-        print('Invalid size')
+        (False, "")
     item = get_object_or_404(Item, slug=slug)
 
     order_item, created = OrderItem.objects.get_or_create(
@@ -221,19 +236,17 @@ def add_to_cart(request, slug, size=0):
         if order.items.filter(item__slug=item.slug, selected_size=size).exists():
             order_item.quantity += 1
             order_item.save()
-            messages.info(request, "This item quantity was updated.")
-            return redirect("core:order-summary")
+            message = "This item quantity was updated."
         else:
             order.items.add(order_item)
-            messages.info(request, "This item was added to your cart.")
-            return redirect("core:order-summary")
+            message = "This item was added to your cart."
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
-        messages.info(request, "This item was added to your cart.")
-        return redirect("core:order-summary")
+        message = "This item was added to your cart."
+    return (True, message)
 
 
 @ login_required
