@@ -148,6 +148,16 @@ class ItemDetailView(DetailView):
     model = Item
     template_name = 'product.html'
 
+    def post(self, *args, **kwargs):
+        if self.request.is_ajax and self.request.method == "POST":
+            size = self.request.POST.get('size')
+            slug = kwargs['slug']
+            (success, message) = add_item_to_cart(
+                self.request, slug, size)
+            if not success:
+                return JsonResponse({"error": ""}, status=200)
+            return JsonResponse({"success": ""}, status=200)
+
 
 class AboutView(ListView):
     model = Item
@@ -171,13 +181,39 @@ class OrderSummaryView(LoginRequiredMixin, View):
         return Order.objects.get(user=user, ordered=False)
 
 
-@login_required
+def get_inventory(request, slug):
+    if request.is_ajax and request.method == "GET":
+        item = get_object_or_404(Item, slug=slug)
+        selected_size = request.GET.get("size", None)
+        if selected_size == None:
+            selected_size = -1
+        else:
+            selected_size = int(selected_size)
+        if selected_size == 0 and item.size_small > 0:
+            return JsonResponse({"in_stock": True}, status=200)
+        elif selected_size == 1 and item.size_medium > 0:
+            return JsonResponse({"in_stock": True}, status=200)
+        elif selected_size == 2 and item.size_large > 0:
+            return JsonResponse({"in_stock": True}, status=200)
+        elif selected_size == 3 and item.size_extra_large > 0:
+            return JsonResponse({"in_stock": True}, status=200)
+        else:
+            return JsonResponse({"in_stock": False}, status=200)
+    return JsonResponse({}, status=400)
+
+
+@ login_required
 def add_to_cart(request, slug, size=0):
+    (success, message) = add_item_to_cart(request, slug, size)
+
+    return redirect("core:order-summary")
+
+
+def add_item_to_cart(request, slug, size):
     try:
         size = int(request.GET.get('size'))
     except Exception as e:
-        print(e)
-        print('Invalid size')
+        (False, "")
     item = get_object_or_404(Item, slug=slug)
 
     order_item, created = OrderItem.objects.get_or_create(
@@ -193,19 +229,17 @@ def add_to_cart(request, slug, size=0):
         if order.items.filter(item__slug=item.slug, selected_size=size).exists():
             order_item.quantity += 1
             order_item.save()
-            messages.info(request, "This item quantity was updated.")
-            return redirect("core:order-summary")
+            message = "This item quantity was updated."
         else:
             order.items.add(order_item)
-            messages.info(request, "This item was added to your cart.")
-            return redirect("core:order-summary")
+            message = "This item was added to your cart."
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
-        messages.info(request, "This item was added to your cart.")
-        return redirect("core:order-summary")
+        message = "This item was added to your cart."
+    return (True, message)
 
 
 @ login_required

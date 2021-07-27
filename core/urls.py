@@ -9,7 +9,8 @@ from .views import (
     stripe_webhook,
     create_checkout_session,
     ProductsView,
-    AboutView
+    AboutView,
+    get_inventory
 )
 
 app_name = 'core'
@@ -26,7 +27,7 @@ urlpatterns = [
          remove_single_item_from_cart, name="remove-single-item-from-cart"),
     path('create-checkout-session',
          create_checkout_session, name="create-checkout-session"),
-    path('webhooks/stripe/', stripe_webhook, name='stripe-webhook')
-
+    path('webhooks/stripe/', stripe_webhook, name='stripe-webhook'),
+    path('get-inventory/<slug>', get_inventory, name='get-inventory')
 
 ]
