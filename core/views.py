@@ -213,7 +213,7 @@ def add_to_cart(request, slug, size):
         success = change_quantity(request, slug, size, 1)
     else:
         # TODO show that out of of stock message
-        print("out of stock")
+        pass
     return redirect("core:order-summary")
 
 
