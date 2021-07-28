@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CheckoutForm
 from django.conf import settings
+from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -21,14 +22,6 @@ def products(requests):
         'items': Item.objects.all()
     }
     return render(request, "products.html", context)
-
-
-def is_valid_form(values):
-    valid = True
-    for field in values:
-        if field == '':
-            valid = False
-    return valid
 
 
 def create_checkout_session(request):
@@ -166,10 +159,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *arg, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
-            print(order.get_items())
-            context = {
-                'object': order
-            }
+            context = {'object': order}
             return render(self.request, 'order_summary.html', context)
         except ObjectDoesNotExist:
             return redirect("/")
@@ -215,11 +205,9 @@ def add_to_cart(request, slug, size):
         selected_size=size
     )
     if in_stock(item, size, order_item.quantity+1):
-        print("instock")
         success = change_quantity(request, slug, size, 1)
     else:
-        # TODO show that out of of stock message
-        print("outofstock")
+        messages.info(request, "This product has extremely limited quantity")
     return redirect("core:order-summary")
 
 
@@ -233,7 +221,7 @@ def change_quantity(request, slug, size, quantity):
     try:
         size = int(request.GET.get('size'))
     except Exception as e:
-        (False, "")
+        False
     item = get_object_or_404(Item, slug=slug)
 
     order_item, created = OrderItem.objects.get_or_create(
@@ -245,14 +233,17 @@ def change_quantity(request, slug, size, quantity):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        # check if the order item is in the order
         if order.items.filter(item__slug=item.slug, selected_size=size).exists():
             order_item.quantity += quantity
             order_item.save()
             if order_item.quantity == 0:
                 order.items.remove(order_item)
+                messages.info(request, "This item was removed from your cart")
+            else:
+                messages.info(request, "This item quantity was updated")
         else:
             order.items.add(order_item)
+            messages.info(request, "This item was added to your order")
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
