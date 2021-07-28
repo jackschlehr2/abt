@@ -27,11 +27,9 @@ def products(requests):
 def create_checkout_session(request):
     try:
         order = Order.objects.get(user=request.user)
-        print(order.get_items())
     except Exception as e:
         print(e)
     YOUR_DOMAIN = 'http://127.0.0.1:8000'
-    print(request.POST)
     try:
 
         line_items = []
@@ -43,21 +41,18 @@ def create_checkout_session(request):
                     'product_data': {
                         'name': order_item.get_name(),
                         'images': [order_item.get_image()],
-                        # 'size': order_item.get_size()
                     },
                 },
+                'tax_rates': ['txr_1JDwWeFVzms5crHWOIT4FZNx'],
                 'quantity': order_item.get_quantity(),
             })
 
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
-            # tax_rate=['txr_1JDwWeFVzms5crHWOIT4FZNx'],
             shipping_rates=['shr_1JDwVPFVzms5crHWCjcYKk16'],
             shipping_address_collection={
                 'allowed_countries': ['US'],
             },
-
-
             line_items=line_items,
             mode='payment',
             success_url=YOUR_DOMAIN + '/success.html',
