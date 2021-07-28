@@ -226,7 +226,7 @@ li {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #243a6f;
+  background-color: white;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   z-index: 999;
 }
@@ -235,7 +235,7 @@ li {
 #bootstrap-override.nav.fix-nav .logo,
 #bootstrap-override.nav.fix-nav .cart-icon,
 #bootstrap-override.nav.fix-nav .hamburger {
-  color: #fff;
+  color: grey;
   font-weight: 500;
 }
 
@@ -247,13 +247,13 @@ li {
 }
 
 #bootstrap-override .logo {
-  font-size: x-large;
+  font-size: large;
 }
 
 #bootstrap-override .navigation .nav-list {
   display: flex;
   align-items: center;
-  font-size: x-large;
+  font-size: large;
 }
 
 #bootstrap-override .nav-item:not(:last-child) {
@@ -561,3 +561,46 @@ main {
 }
 
 /* order summary  end  */
+
+/* text on product */
+#products .card-body h5 {
+  color: #4f4f4f;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+#products .card-body h6 {
+  font-size: 1.25rem;
+  color: #4f4f4f;
+  font-weight: 400;
+}
+/* text on product end */
+
+/* product page  */
+main#product .container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+main#product div#product-picture {
+  padding-top: 2rem;
+  max-width: 500px;
+  height: auto;
+}
+
+main#product p.product-title {
+  font-size: 2.5rem;
+  color: #4f4f4f;
+}
+
+main#product p.product-description {
+  font-size: 1.5rem;
+  color: #4f4f4f;
+}
+
+main#product p.product-price span {
+  font-size: 1.5rem;
+  color: #4f4f4f;
+}
+/* end product page */

@@ -1,61 +1,47 @@
 {% extends "base.html" %} {% block content %} {% load static %}
-<main class="mt-5 pt-4">
-  <div class="container dark-grey-text mt-5">
-    <!--Grid row-->
-    <div class="row wow fadeIn">
-      <!--Grid column-->
-      <div class="col-md-6 mb-4">
-        <img src="{{ item.image.url }}" class="img-fluid" alt="" />
-      </div>
-      <!--Grid column-->
-
-      <!--Grid column-->
-      <div class="col-md-6 mb-4">
-        <!--Content-->
-        <div class="p-4">
-          <div class="mb-3"></div>
-
-          <p class="lead font-weight-bold">{{object.title}}</p>
-
-          <p>{{object.description}}</p>
-          <p class="lead">
-            <span>
-              ${% if item.discount_price %}
-              <span class="mr-1">
-                <del> {{object.price }} </del>
-              </span>
-              <span> ${{object.discount_price}} </span>
-              {% else %}
-              <span> {{ item.price }} </span>
-              {% endif %}
-            </span>
-          </p>
-
-          <select
-            id="size_selector"
-            name="size"
-            required
-            onchange="size_selected(this)"
-          >
-            <option value="none" selected disabled hidden>select size</option>
-            <option value="0">S</option>
-            <option value="1">M</option>
-            <option value="2">L</option>
-            <option value="3">XL</option>
-          </select>
-
-          <button id="add_to_cart" class="btn btn-primary btn-md my-0 p">
-            add to cart
-            <i class="fas fa-shopping-cart ml-1"></i>
-          </button>
-          <button id="sold_out" class="btn btn-danger btn-md my-0 p">
-            sold out
-          </button>
-        </div>
-        <!--Content-->
-      </div>
-      <!--Grid column-->
+<main class="mt-5 pt-4" id="product">
+  <div class="container mt-5">
+    <!--picture-->
+    <div class="col-md-6 mb-4" id="product-picture">
+      <img src="{{ item.image.url }}" class="img-fluid" alt="" />
     </div>
+    <!--picture-->
+
+    <!--description-->
+    <div class="col-md-6 mb-4">
+      <!--Content-->
+      <div class="p-4">
+        <p class="product-title">{{object.title}}</p>
+
+        <p class="product-description">{{object.description}}</p>
+        <p class="product-price">
+          <span>${{ item.price }}</span>
+        </p>
+
+        <select
+          id="size_selector"
+          name="size"
+          required
+          onchange="size_selected(this)"
+        >
+          <option value="none" selected disabled hidden>select size</option>
+          <option value="0">S</option>
+          <option value="1">M</option>
+          <option value="2">L</option>
+          <option value="3">XL</option>
+        </select>
+
+        <button id="add_to_cart" class="btn btn-primary btn-md my-0 p">
+          add to cart
+          <i class="fas fa-shopping-cart ml-1"></i>
+        </button>
+        <button id="sold_out" class="btn btn-danger btn-md my-0 p">
+          sold out
+        </button>
+      </div>
+      <!--Content-->
+    </div>
+    <!--description-->
     <!--Grid row-->
   </div>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

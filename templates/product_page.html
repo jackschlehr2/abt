@@ -21,9 +21,6 @@
               </div>
 
               <div class="card-body text-center">
-                <a href="" class="grey-text">
-                  <h5>{{ item.get_category_display }}</h5>
-                </a>
                 <h5>
                   <strong>
                     <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
@@ -32,7 +29,7 @@
                 </h5>
 
                 <h6 class="font-weight-bold grey-text">
-                  <strong>${{ item.price }}</strong>
+                  ${{ item.price }}
                 </h4>
 
               </div>
