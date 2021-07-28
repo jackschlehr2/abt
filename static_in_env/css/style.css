@@ -503,3 +503,61 @@ main {
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
 }
+
+/* order summary  start */
+
+#order-summary button {
+  -webkit-text-size-adjust: 100%;
+
+  box-sizing: border-box;
+  font-family: inherit;
+  text-align: center;
+  vertical-align: middle;
+  display: block;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  text-transform: uppercase;
+  word-wrap: break-word;
+  white-space: normal;
+  border: 0;
+  appearance: none;
+  cursor: pointer;
+  color: #fff;
+  margin: 0;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.05);
+  font-size: 12px;
+  padding: 17px 29px 16px 29px;
+  line-height: 1;
+}
+
+#order-summary .card-body h5.mb-4 {
+  font-size: 2rem;
+  color: #4f4f4f;
+  font-weight: 500;
+}
+
+#order-summary .card-body .rounded img {
+  border-radius: 4%;
+}
+
+#order-summary .card-body .item-title {
+  color: #4f4f4f;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+#order-summary .card-body .mb-0 strong {
+  color: #4f4f4f;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+main {
+  min-height: 100%;
+}
+
+/* order summary  end  */
