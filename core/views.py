@@ -189,18 +189,18 @@ def get_inventory(request, slug):
     return JsonResponse({}, status=400)
 
 
-def in_stock(item, selected_size):
+def in_stock(item, selected_size, quantity=1):
     if selected_size == None:
         selected_size = -1
     else:
         selected_size = int(selected_size)
-    if selected_size == 0 and item.size_small > 0:
+    if selected_size == 0 and item.size_small >= quantity:
         return True
-    elif selected_size == 1 and item.size_medium > 0:
+    elif selected_size == 1 and item.size_medium >= quantity:
         return True
-    elif selected_size == 2 and item.size_large > 0:
+    elif selected_size == 2 and item.size_large >= quantity:
         return True
-    elif selected_size == 3 and item.size_extra_large > 0:
+    elif selected_size == 3 and item.size_extra_large >= quantity:
         return True
     return False
 
@@ -208,12 +208,18 @@ def in_stock(item, selected_size):
 @ login_required
 def add_to_cart(request, slug, size):
     item = get_object_or_404(Item, slug=slug)
-    if in_stock(item, size):
+    order_item, created = OrderItem.objects.get_or_create(
+        item=item,
+        user=request.user,
+        ordered=False,
+        selected_size=size
+    )
+    if in_stock(item, size, order_item.quantity+1):
         print("instock")
         success = change_quantity(request, slug, size, 1)
     else:
         # TODO show that out of of stock message
-        print("out of stock")
+        print("outofstock")
     return redirect("core:order-summary")
 
 
