@@ -1,53 +1,148 @@
 {% extends "base.html" %} {% block content %}
 <main>
   <div class="container">
-    <div class="table-responsive text-nowrap">
-      <h2>Order Summary</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Size</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for order_item in object.items.all %}
-          <tr>
-            <td style="word-break: break-all">{{ order_item.item.title }}</td>
-            <td>{{ order_item.get_size }}</td>
-            <td>$ {{ order_item.item.price }}</td>
-            <td>
-              <a
-                href="{% url 'core:remove-single-item-from-cart' order_item.item.slug order_item.selected_size %}"
-                ><i class="fas fa-minus mr-2"></i
-              ></a>
-              {{ order_item.quantity }}
-              <a
-                href="{% url 'core:add-to-cart' order_item.item.slug order_item.selected_size%}"
-                ><i class="fas fa-plus ml-2"></i
-              ></a>
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="4">Your cart is empty</td>
-          </tr>
-          <tr>
-            <td colspan="5">
-              <a class="btn btn-primary float-right" href="/"
-                >Continue shopping</a
-              >
-            </td>
-          </tr>
-          {% endfor %} {% if object.get_total %}
-          <tr>
-            <td colspan="3"><b>Order Total</b></td>
-            <td><b>${{ object.get_total }}</b></td>
-          </tr>
-          <tr>
-            <td colspan="4">
+    <!--Section: Block Content-->
+    <section class="mt-5 mb-4" id="order-summary">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-8">
+          <!-- Card -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="mb-4">
+                Cart (<span>{{object.get_number_items}}</span> items)
+              </h5>
+
+              {% for order_item in object.items.all %}
+              <div class="row mb-4">
+                <div class="col-md-5 col-lg-3 col-xl-3">
+                  <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                    <img
+                      class="img-fluid w-100"
+                      src="{{ order_item.item.image.url}}"
+                      alt="Sample"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-7 col-lg-9 col-xl-9">
+                  <div>
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h5 class="item-title">{{ order_item.item.title }}</h5>
+                        <p class="mb-3 text-muted text-uppercase small"></p>
+                        <p class="mb-3 text-muted text-uppercase small">
+                          Size: {{ order_item.get_size }}
+                        </p>
+                      </div>
+                      <div>
+                        <div class="mb-0 w-100">
+                          <a
+                            href="{% url 'core:remove-single-item-from-cart' order_item.item.slug order_item.selected_size %}"
+                          >
+                            <i class="fas fa-minus mr-2"></i>
+                          </a>
+                          {{ order_item.quantity }}
+                          <a
+                            href="{% url 'core:add-to-cart' order_item.item.slug order_item.selected_size%}"
+                            ><i class="fas fa-plus ml-2"></i
+                          ></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <p class="mb-0">
+                        <span
+                          ><strong>${{ order_item.item.price }}</strong></span
+                        >
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="mb-4" />
+              {% endfor %}
+              <p class="text-primary mb-0">
+                <i class="fas fa-info-circle mr-1"></i> Holding items in the
+                cart does not reserve them
+              </p>
+            </div>
+          </div>
+          <!-- Card -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="mb-4">Expected shipping delivery</h5>
+
+              <p class="mb-0">Expect 2-3 weeks for delivery</p>
+            </div>
+          </div>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4">
+          <!-- Card -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="mb-4">We accept</h5>
+
+              <img
+                class="mr-2"
+                style="max-width: 45px"
+                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                alt="Visa"
+              />
+              <img
+                class="mr-2"
+                style="max-width: 45px"
+                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                alt="American Express"
+              />
+              <img
+                class="mr-2"
+                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                alt="Mastercard"
+                style="max-width: 45px"
+              />
+            </div>
+          </div>
+          <!-- Card -->
+          <!-- Card -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="mb-3">The total amount of</h5>
+
+              <ul class="list-group list-group-flush">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                >
+                  Sub Total
+                  <span>{{ object.get_sub_total }}</span>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                >
+                  Shipping
+                  <span>{{object.get_shipping}}</span>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                >
+                  Tax
+                  <span>{{object.get_tax}}</span>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center px-0"
+                >
+                  <div>
+                    <strong>Total</strong>
+                  </div>
+                  <span><strong>${{object.get_total}}</strong></span>
+                </li>
+              </ul>
+
               <form
                 style="all: unset"
                 action="/create-checkout-session"
@@ -56,21 +151,21 @@
                 {% csrf_token %}
                 <input type="hidden" name="user" value="{{object}}" />
                 <button
-                  class="btn btn-warning float-right ml-2 stripe"
+                  class="btn btn-primary btn-block waves-effect waves-light"
                   type="submit"
                 >
                   Checkout
                 </button>
               </form>
-              <a class="btn btn-primary float-right" href="/"
-                >Continue shopping</a
-              >
-            </td>
-          </tr>
-          {% endif %}
-        </tbody>
-      </table>
-    </div>
+            </div>
+          </div>
+          <!-- Card -->
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </section>
+    <!--Section: Block Content-->
   </div>
 </main>
 

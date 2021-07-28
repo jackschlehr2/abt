@@ -115,11 +115,20 @@ class Order(models.Model):
     def __str__(self):
         return self.user.username
 
-    def get_total(self):
+    def get_sub_total(self):
         total = 0
         for order_item in self.items.all():
             total += order_item.get_final_price()
-        return total
+        return '{:.2f}'.format(total)
+
+    def get_tax(self):
+        return '{:.2f}'.format((float(self.get_sub_total())*.07))
+
+    def get_shipping(self):
+        return '{:.2f}'.format(8.0)
+
+    def get_total(self):
+        return '{:.2f}'.format(float(self.get_sub_total()) + float(self.get_tax()) + float(self.get_shipping()))
 
     def get_items(self):
         items = []
