@@ -151,7 +151,7 @@ class ItemDetailView(DetailView):
         if self.request.is_ajax and self.request.method == "POST":
             size = self.request.POST.get('size')
             slug = kwargs['slug']
-            success = add_item_to_cart(self.request, slug, size)
+            success = add_to_cart(self.request, slug, size)
             if not success:
                 return JsonResponse({"error": ""}, status=200)
             return JsonResponse({"success": ""}, status=200)
@@ -182,26 +182,38 @@ def get_inventory(request, slug):
     if request.is_ajax and request.method == "GET":
         item = get_object_or_404(Item, slug=slug)
         selected_size = request.GET.get("size", None)
-        if selected_size == None:
-            selected_size = -1
-        else:
-            selected_size = int(selected_size)
-        if selected_size == 0 and item.size_small > 0:
-            return JsonResponse({"in_stock": True}, status=200)
-        elif selected_size == 1 and item.size_medium > 0:
-            return JsonResponse({"in_stock": True}, status=200)
-        elif selected_size == 2 and item.size_large > 0:
-            return JsonResponse({"in_stock": True}, status=200)
-        elif selected_size == 3 and item.size_extra_large > 0:
+        if in_stock(item, selected_size):
             return JsonResponse({"in_stock": True}, status=200)
         else:
             return JsonResponse({"in_stock": False}, status=200)
     return JsonResponse({}, status=400)
 
 
+def in_stock(item, selected_size):
+    if selected_size == None:
+        selected_size = -1
+    else:
+        selected_size = int(selected_size)
+    if selected_size == 0 and item.size_small > 0:
+        return True
+    elif selected_size == 1 and item.size_medium > 0:
+        return True
+    elif selected_size == 2 and item.size_large > 0:
+        return True
+    elif selected_size == 3 and item.size_extra_large > 0:
+        return True
+    return False
+
+
 @ login_required
 def add_to_cart(request, slug, size):
-    success = change_quantity(request, slug, size, 1)
+    item = get_object_or_404(Item, slug=slug)
+    if in_stock(item, size):
+        print("instock")
+        success = change_quantity(request, slug, size, 1)
+    else:
+        # TODO show that out of of stock message
+        print("out of stock")
     return redirect("core:order-summary")
 
 
