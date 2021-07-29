@@ -21,7 +21,7 @@
                     <img
                       class="img-fluid w-100"
                       src="{{ order_item.item.image.url}}"
-                      alt="Sample"
+                      alt="product-image"
                     />
                   </div>
                 </div>
@@ -36,16 +36,20 @@
                         </p>
                       </div>
                       <div>
-                        <div class="mb-0 w-100">
+                        <div class="mb-0 w-100 quantity">
                           <a
+                            class="minus"
                             href="{% url 'core:remove-single-item-from-cart' order_item.item.slug order_item.selected_size %}"
                           >
-                            <i class="fas fa-minus mr-2"></i>
+                            <i class="fas fa-minus" style="margin: 0"></i>
                           </a>
-                          {{ order_item.quantity }}
+                          <span class="quantity-number">
+                            {{ order_item.quantity }}
+                          </span>
                           <a
+                            class="plus"
                             href="{% url 'core:add-to-cart' order_item.item.slug order_item.selected_size%}"
-                            ><i class="fas fa-plus ml-2"></i
+                            ><i class="fas fa-plus"></i
                           ></a>
                         </div>
                       </div>

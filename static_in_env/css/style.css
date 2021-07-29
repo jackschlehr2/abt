@@ -191,6 +191,10 @@ li {
   margin: 0 auto;
 }
 
+#bootstrap-override.nav {
+  z-index: 10;
+}
+
 @media only screen and (max-width: 1500px) {
   #bootstrap-override.nav {
     width: 100%;
@@ -294,10 +298,10 @@ li {
     width: 80%;
     max-width: 40rem;
     height: 100%;
-    background-color: #fff;
+    background-color: whitesmoke;
     transition: all 500ms ease-in-out;
     z-index: 100;
-    color: #243a6f;
+    color: #c7b198;
   }
 
   #bootstrap-override .menu.show {
@@ -308,12 +312,12 @@ li {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #243a6f;
+    background-color: #596e79;
     padding: 1rem 1.6rem;
   }
 
-  #bootstrap-override .top-nav .logo {
-    color: #fff;
+  #bootstrap-override .navigation .top-nav .logo {
+    color: rgb(174, 182, 187);
   }
 
   #bootstrap-override .top-nav .close {
@@ -338,13 +342,13 @@ li {
   #bootstrap-override .nav-link:link,
   #bootstrap-override .nav-link:visited {
     display: block;
-    font-size: 1.7rem;
+    font-size: 2.25rem;
     padding: 1rem 0;
   }
 
-  #bootstrap-override.nav.fix-nav .nav-link {
+  /* #bootstrap-override.nav.fix-nav .nav-link {
     color: #243a6f;
-  }
+  } */
 
   #bootstrap-override .nav-list {
     flex-direction: column;
@@ -377,10 +381,32 @@ main#home {
   padding-top: 0;
 }
 
-main#home .hero .hero-content {
+main#home .hero {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  opacity: 1;
+}
+
+main#home .hero::before {
+  background-image: url("../bannerwide.jpeg");
+  content: "";
   position: absolute;
-  top: 40%;
-  left: 10%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+main#home .hero .hero-content {
+  position: relative;
+  left: -30%;
 }
 .header .hero-img {
   position: absolute;
@@ -433,20 +459,6 @@ main#home .hero .hero-content h1 span {
     min-height: 100vh;
   }
 
-  .header .hero-img {
-    height: 40rem;
-    bottom: -15%;
-  }
-
-  main#home .hero .hero-content {
-    top: 40%;
-    /* transform: translate(15%, -50%); */
-  }
-
-  .header .hero-img {
-    right: 0%;
-  }
-
   main#home .hero .hero-content h2 {
     font-size: 1.8rem;
   }
@@ -464,6 +476,7 @@ main#home .hero .hero-content h1 span {
   font-size: 1.25rem;
 }
 
+/* mission statement */
 #mission {
   margin: 2rem;
 }
@@ -490,9 +503,10 @@ main#home .hero .hero-content h1 span {
 }
 
 main {
-  background-color: rgba(84, 107, 121, 0.411);
+  background-color: whitesmoke;
   padding-top: 70px;
-  z-index: -1;
+  z-index: -10;
+  min-height: 100%;
 }
 
 .card {
@@ -556,8 +570,21 @@ main {
   font-size: 1.25rem;
 }
 
-main {
-  min-height: 100%;
+#order-summary .card-body div.quantity {
+  border: 1px solid #4f4f4f;
+  border-radius: 5px;
+  color: #4f4f4f;
+}
+
+#order-summary .card-body div.quantity span {
+  border: 1px solid #4f4f4f;
+  padding: 3px;
+}
+#order-summary .card-body div.quantity a.minus {
+  margin-left: 2px;
+}
+#order-summary .card-body div.quantity a.plus {
+  margin: 2px;
 }
 
 /* order summary  end  */
