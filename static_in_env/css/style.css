@@ -22,8 +22,10 @@ body {
   font-weight: 400;
   background-color: #fff;
   color: #243a6f;
-  position: relative;
+  position: absolute;
   z-index: 1;
+  width: 100%;
+  height: 100%;
 }
 
 h1,
@@ -39,7 +41,7 @@ a {
 }
 /* Footer color for sake of consistency with Navbar */
 .page-footer {
-  background-color: #929fba;
+  background-color: #596e79;
 }
 form {
   width: 30vw;
@@ -223,6 +225,7 @@ li {
   align-content: center;
   position: absolute;
   width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #bootstrap-override.nav.fix-nav {
@@ -247,7 +250,8 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: white;
+  color: rgb(174, 182, 187);
+  /* background-color: rgba(0, 0, 0, 0.5); */
 }
 
 #bootstrap-override .logo {
@@ -301,7 +305,7 @@ li {
     background-color: whitesmoke;
     transition: all 500ms ease-in-out;
     z-index: 100;
-    color: #c7b198;
+    color: rgb(174, 182, 187);
   }
 
   #bootstrap-override .menu.show {
@@ -384,7 +388,7 @@ main#home {
 main#home .hero {
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: center left;
   align-items: center;
   height: 100vh;
   width: 100%;
@@ -393,6 +397,7 @@ main#home .hero {
 
 main#home .hero::before {
   background-image: url("../bannerwide.jpeg");
+  opacity: 0.9;
   content: "";
   position: absolute;
   top: 0;
@@ -406,18 +411,10 @@ main#home .hero::before {
 
 main#home .hero .hero-content {
   position: relative;
-  left: -30%;
-}
-.header .hero-img {
-  position: absolute;
-  bottom: -10%;
-  right: -5%;
-  height: 70rem;
-  object-fit: contain;
+  left: 20%;
 }
 
 main#home .hero .hero-content h1 span {
-  color: black;
   font-size: 2rem;
   font-weight: 700;
   display: block;
@@ -425,19 +422,15 @@ main#home .hero .hero-content h1 span {
   color: white;
 }
 
+main#home .hero .hero-content a {
+  padding: 0.5rem;
+  font-size: 1.75rem;
+  color: white;
+  border-style: solid;
+  border-color: white;
+}
+
 @media only screen and (max-width: 1200px) {
-  .header .hero-img {
-    right: -20%;
-  }
-
-  main#home .hero .hero-content {
-    /* transform: translate(20%, -50%); */
-  }
-
-  .hero-content h2 {
-    font-size: 2rem;
-  }
-
   main#home .hero .hero-content h1 span {
     font-size: 2rem;
   }
@@ -447,11 +440,6 @@ main#home .hero .hero-content h1 span {
   .header {
     min-height: 70vh;
   }
-
-  .header .hero-img {
-    height: 40rem;
-    right: -10%;
-  }
 }
 
 @media only screen and (max-width: 567px) {
@@ -459,16 +447,22 @@ main#home .hero .hero-content h1 span {
     min-height: 100vh;
   }
 
-  main#home .hero .hero-content h2 {
-    font-size: 1.8rem;
+  main#home .hero .hero-content {
+    position: relative;
+    left: 10%;
+    top: 10%;
   }
 
   main#home .hero .hero-content h1 span {
-    font-size: 2rem;
+    font-size: 3rem;
   }
 
   main#home .hero .hero-content a {
-    padding: 1rem 3rem;
+    padding: 1rem;
+    font-size: 1.75rem;
+    color: white;
+    border-style: solid;
+    border-color: white;
   }
 }
 
@@ -483,12 +477,14 @@ main#home .hero .hero-content h1 span {
 
 #mission .container {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   flex-direction: row;
+  justify-content: center;
 }
 
 #mission .statement {
   max-width: 500px;
+  color: grey;
 }
 #mission .picture {
   max-width: 500px;
@@ -496,7 +492,7 @@ main#home .hero .hero-content h1 span {
 }
 
 @media only screen and(max-width: 996px) {
-  #mission .container {
+  section#mission .container {
     flex-direction: row;
     flex-wrap: wrap;
   }
@@ -504,9 +500,10 @@ main#home .hero .hero-content h1 span {
 
 main {
   background-color: whitesmoke;
-  padding-top: 70px;
   z-index: -10;
   min-height: 100%;
+  margin-top: 0 !important;
+  padding-top: 70px;
 }
 
 .card {
@@ -590,6 +587,40 @@ main {
 /* order summary  end  */
 
 /* text on product */
+main#products section.products {
+  justify-content: center;
+}
+
+main#products div.container {
+  min-width: 100%;
+}
+
+main#products div.container section.products div.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  min-width: 100%;
+}
+main#products section.products div div.card {
+  position: relative;
+
+  padding-right: 15px;
+  padding-left: 15px;
+  margin: 1.5rem;
+  min-width: 280px;
+  max-width: 380px;
+  width: 100%;
+}
+@media only screen and(max-width: 1100px) {
+  main#products section.products div div.card {
+    min-width: 380px;
+  }
+}
+
+main#products section.products div div.card .view {
+  margin-top: 1rem;
+}
 #products .card-body h5 {
   color: #4f4f4f;
   font-size: 1.4rem;
@@ -611,7 +642,7 @@ main#product .container {
 }
 
 main#product div#product-picture {
-  padding-top: 2rem;
+  /* padding-top: 2rem; */
   max-width: 500px;
   height: auto;
 }
@@ -631,3 +662,57 @@ main#product p.product-price span {
   color: #4f4f4f;
 }
 /* end product page */
+
+/* start about page  */
+main section.about {
+  margin: 2rem;
+  color: #4f4f4f;
+}
+
+main section.about .container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+main section.about h1 {
+  margin: 1rem;
+  font-size: 3.25rem;
+}
+
+main section.about p {
+  max-width: 500px;
+  color: #4f4f4f;
+  margin: 1rem;
+  font-size: 2rem;
+}
+
+/* end about page  */
+
+/* sign out page  */
+
+section#sign-out {
+  padding-top: 70px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+section#sign-out .card {
+  width: fit-content;
+  align-items: center;
+  height: fit-content;
+}
+
+section#sign-out .card form {
+  box-shadow: none;
+  text-align: -webkit-center;
+}
+
+section#sign-out .card form button {
+  font-size: 1.5rem;
+  width: 40%;
+}
+
+/* sign out page end */
