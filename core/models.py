@@ -5,29 +5,9 @@ from django.shortcuts import reverse
 from datetime import datetime
 
 
-CATEGORY_CHOICES = (
-    ('S', 'Shirt'),
-    ('SW', 'Sport Wear'),
-    ('OW', 'Outwear'),
-)
-
-LABEL_CHOICES = (
-    ('P', 'primary'),
-    ('S', 'secondary'),
-    ('D', 'danger'),
-)
-
-ADDRESS_CHOICES = (
-    ('B', 'Billing'),
-    ('S', 'Shipping'),
-)
-
-
 class UserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
-    one_click_purchasing = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -141,29 +121,6 @@ class Order(models.Model):
         for order_item in self.items.all():
             count += order_item.get_quantity()
         return count
-
-
-class Address(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE,  blank=True, null=True)
-    street_address = models.CharField(max_length=100)
-    apartment_address = models.CharField(max_length=100)
-    zip = models.CharField(max_length=100)
-    address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
-
-    def __str__(self):
-        return self.user.username
-
-
-class Payment(models.Model):
-    stripe_charge_id = models.CharField(max_length=50)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.SET_NULL, blank=True, null=True)
-    amount = models.FloatField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.user.username
 
 
 def userprofile_receiver(sender, instance, created, *args, **kwargs):
