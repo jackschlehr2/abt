@@ -693,7 +693,7 @@ main section.about p {
 
 section#sign-out {
   padding-top: 70px;
-  color: grey;
+  color: black;
   display: flex;
   justify-content: center;
   height: 100%;
@@ -716,3 +716,34 @@ section#sign-out .card form button {
 }
 
 /* sign out page end */
+
+/* signup page */
+
+section#sign-up,
+section#sign-in {
+  padding-top: 70px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+section#sign-up .card,
+section#sign-in .card {
+  width: fit-content;
+  align-items: center;
+  height: fit-content;
+}
+
+section#sign-up .card form,
+section#sign-in .card form {
+  box-shadow: none;
+  text-align: -webkit-center;
+}
+
+section#sign-up .card form button,
+section#sign-in .card form button {
+  font-size: 1.5rem;
+  width: 40%;
+}
+/* signup page end  */
