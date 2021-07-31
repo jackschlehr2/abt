@@ -127,6 +127,7 @@ class HomeView(ListView):
 
 class ProductsView(ListView):
     model = Item
+
     paginate_by = 10
     template_name = 'product_page.html'
 
@@ -234,7 +235,7 @@ def change_quantity(request, slug, size, quantity):
         if order.items.filter(item__slug=item.slug, selected_size=size).exists():
             order_item.quantity += quantity
             order_item.save()
-            if order_item.quantity == 0:
+            if order_item.quantity <= 0:
                 order.items.remove(order_item)
                 messages.info(request, "This item was removed from your cart")
             else:

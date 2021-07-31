@@ -675,7 +675,8 @@ main section.about .container {
   flex-direction: row;
   justify-content: center;
 }
-main section.about h1 {
+
+ain section.about .container main section.about h1 {
   margin: 1rem;
   font-size: 3.25rem;
 }
@@ -689,8 +690,10 @@ main section.about p {
 
 /* end about page  */
 
-/* sign out page  */
+/* signup page */
 
+section#sign-up,
+section#sign-in,
 section#sign-out {
   padding-top: 70px;
   color: black;
@@ -699,51 +702,30 @@ section#sign-out {
   height: 100%;
 }
 
+section#sign-up .card,
+section#sign-in .card,
 section#sign-out .card {
   width: fit-content;
   align-items: center;
   height: fit-content;
 }
 
+section#sign-up .card form,
+section#sign-in .card form,
 section#sign-out .card form {
   box-shadow: none;
   text-align: -webkit-center;
 }
 
+section#sign-up .card form button,
+section#sign-in .card form button,
 section#sign-out .card form button {
   font-size: 1.5rem;
   width: 40%;
 }
 
-/* sign out page end */
-
-/* signup page */
-
-section#sign-up,
-section#sign-in {
-  padding-top: 70px;
-  color: black;
-  display: flex;
-  justify-content: center;
-  height: 100%;
-}
-
-section#sign-up .card,
-section#sign-in .card {
-  width: fit-content;
-  align-items: center;
-  height: fit-content;
-}
-
-section#sign-up .card form,
-section#sign-in .card form {
-  box-shadow: none;
-  text-align: -webkit-center;
-}
-
-section#sign-up .card form button,
-section#sign-in .card form button {
-  font-size: 1.5rem;
-  width: 40%;
+section#sign-in .card form input#id_remember {
+  height: 30px;
+  width: 300px;
 }
 /* signup page end  */

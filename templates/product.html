@@ -3,7 +3,9 @@
   <div class="container mt-5">
     <!--picture-->
     <div class="col-md-6 mb-4" id="product-picture">
-      <img src="{{ item.image.url }}" class="img-fluid" alt="" />
+      {% for image in item.get_sorted_images %}
+      <img src="{{ image.image.url }}" class="img-fluid" alt="" />
+      {% endfor %}
     </div>
     <!--picture-->
 

@@ -13,6 +13,14 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class Image(models.Model):
+    name = models.CharField(max_length=100, default="img")
+    image = models.ImageField(upload_to='static_in_env', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Item(models.Model):
     title = models.CharField(max_length=100, default="default")
     price = models.IntegerField(default=100)
@@ -22,7 +30,7 @@ class Item(models.Model):
     size_medium = models.IntegerField(default=0)
     size_large = models.IntegerField(default=0)
     size_extra_large = models.IntegerField(default=0)
-    image = models.ImageField(upload_to='static_in_env', blank=True, null=True)
+    images = models.ManyToManyField(Image)
 
     def __str__(self):
         return self.title
@@ -41,6 +49,15 @@ class Item(models.Model):
         return reverse("core:remove-from-cart", kwargs={
             'slug': self.slug
         })
+
+    def get_first_image(self):
+        for image in self.images.all():
+            if 'front' in image.name:
+                return image.image.url
+        return self.images.all()[0].image.url
+
+    def get_sorted_images(self):
+        return sorted(self.images.all(), key=lambda image: image.name)
 
 
 class OrderItem(models.Model):
