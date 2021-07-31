@@ -55,7 +55,7 @@ def create_checkout_session(request):
             },
             line_items=line_items,
             mode='payment',
-            success_url=YOUR_DOMAIN + '/success.html',
+            success_url=YOUR_DOMAIN + '/',
             cancel_url=YOUR_DOMAIN + '/order-summary',
         )
         return redirect(checkout_session.url, code=303)
