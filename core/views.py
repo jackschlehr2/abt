@@ -3,7 +3,7 @@ import stripe
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView, View
-from .models import Item, Order, OrderItem, Address, Payment, UserProfile
+from .models import Item, Order, OrderItem, UserProfile
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -199,7 +199,10 @@ def add_to_cart(request, slug, size):
         ordered=False,
         selected_size=size
     )
-    if in_stock(item, size, order_item.quantity+1):
+    print(created, order_item.quantity+1)
+    if not created and in_stock(item, size, order_item.quantity+1):
+        success = change_quantity(request, slug, size, 1)
+    elif created and in_stock(item, size, 1):
         success = change_quantity(request, slug, size, 1)
     else:
         messages.info(request, "This product has extremely limited quantity")
@@ -216,7 +219,7 @@ def change_quantity(request, slug, size, quantity):
     try:
         size = int(request.GET.get('size'))
     except Exception as e:
-        False
+        print(e)
     item = get_object_or_404(Item, slug=slug)
 
     order_item, created = OrderItem.objects.get_or_create(

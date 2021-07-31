@@ -41,24 +41,18 @@
           <a href="{% url "core:order-summary"   %}" class="nav-link waves-effect" style="">
               {{ request.user|cart_item_count }}
             <i class="fas fa-shopping-cart"></i>
-            <span class="clearfix d-none d-sm-inline-block">     </span>
+            
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link waves-effect" href="{% url 'account_logout' %}">
-            <span class="clearfix d-none d-sm-inline-block"> Logout </span>
-          </a>
+          <a class="nav-link waves-effect" href="{% url 'account_logout' %}"> logout</a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link waves-effect" href="{% url 'account_login' %}">
-            <span class="clearfix d-none d-sm-inline-block"> Login </span>
-          </a>
+          <a class="nav-link waves-effect" href="{% url 'account_login' %}">login </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link waves-effect" href="{% url 'account_signup' %}">
-            <span class="clearfix d-none d-sm-inline-block"> Signup </span>
-          </a>
+          <a class="nav-link waves-effect" href="{% url 'account_signup' %}">signup   </a>
         </li>
         {% endif %}
       </ul>

@@ -22,8 +22,10 @@ body {
   font-weight: 400;
   background-color: #fff;
   color: #243a6f;
-  position: relative;
+  position: absolute;
   z-index: 1;
+  width: 100%;
+  height: 100%;
 }
 
 h1,
@@ -39,7 +41,7 @@ a {
 }
 /* Footer color for sake of consistency with Navbar */
 .page-footer {
-  background-color: #929fba;
+  background-color: #596e79;
 }
 form {
   width: 30vw;
@@ -191,6 +193,10 @@ li {
   margin: 0 auto;
 }
 
+#bootstrap-override.nav {
+  z-index: 10;
+}
+
 @media only screen and (max-width: 1500px) {
   #bootstrap-override.nav {
     width: 100%;
@@ -219,6 +225,7 @@ li {
   align-content: center;
   position: absolute;
   width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #bootstrap-override.nav.fix-nav {
@@ -243,7 +250,8 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: white;
+  color: rgb(174, 182, 187);
+  /* background-color: rgba(0, 0, 0, 0.5); */
 }
 
 #bootstrap-override .logo {
@@ -294,10 +302,10 @@ li {
     width: 80%;
     max-width: 40rem;
     height: 100%;
-    background-color: #fff;
+    background-color: whitesmoke;
     transition: all 500ms ease-in-out;
     z-index: 100;
-    color: #243a6f;
+    color: rgb(174, 182, 187);
   }
 
   #bootstrap-override .menu.show {
@@ -308,12 +316,12 @@ li {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #243a6f;
+    background-color: #596e79;
     padding: 1rem 1.6rem;
   }
 
-  #bootstrap-override .top-nav .logo {
-    color: #fff;
+  #bootstrap-override .navigation .top-nav .logo {
+    color: rgb(174, 182, 187);
   }
 
   #bootstrap-override .top-nav .close {
@@ -338,13 +346,13 @@ li {
   #bootstrap-override .nav-link:link,
   #bootstrap-override .nav-link:visited {
     display: block;
-    font-size: 1.7rem;
+    font-size: 2.25rem;
     padding: 1rem 0;
   }
 
-  #bootstrap-override.nav.fix-nav .nav-link {
+  /* #bootstrap-override.nav.fix-nav .nav-link {
     color: #243a6f;
-  }
+  } */
 
   #bootstrap-override .nav-list {
     flex-direction: column;
@@ -377,21 +385,36 @@ main#home {
   padding-top: 0;
 }
 
-main#home .hero .hero-content {
-  position: absolute;
-  top: 40%;
-  left: 10%;
+main#home .hero {
+  position: relative;
+  display: flex;
+  justify-content: center left;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  opacity: 1;
 }
-.header .hero-img {
+
+main#home .hero::before {
+  background-image: url("../bannerwide.jpeg");
+  opacity: 0.9;
+  content: "";
   position: absolute;
-  bottom: -10%;
-  right: -5%;
-  height: 70rem;
-  object-fit: contain;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+main#home .hero .hero-content {
+  position: relative;
+  left: 20%;
 }
 
 main#home .hero .hero-content h1 span {
-  color: black;
   font-size: 2rem;
   font-weight: 700;
   display: block;
@@ -399,19 +422,15 @@ main#home .hero .hero-content h1 span {
   color: white;
 }
 
+main#home .hero .hero-content a {
+  padding: 0.5rem;
+  font-size: 1.75rem;
+  color: white;
+  border-style: solid;
+  border-color: white;
+}
+
 @media only screen and (max-width: 1200px) {
-  .header .hero-img {
-    right: -20%;
-  }
-
-  main#home .hero .hero-content {
-    /* transform: translate(20%, -50%); */
-  }
-
-  .hero-content h2 {
-    font-size: 2rem;
-  }
-
   main#home .hero .hero-content h1 span {
     font-size: 2rem;
   }
@@ -421,11 +440,6 @@ main#home .hero .hero-content h1 span {
   .header {
     min-height: 70vh;
   }
-
-  .header .hero-img {
-    height: 40rem;
-    right: -10%;
-  }
 }
 
 @media only screen and (max-width: 567px) {
@@ -433,30 +447,22 @@ main#home .hero .hero-content h1 span {
     min-height: 100vh;
   }
 
-  .header .hero-img {
-    height: 40rem;
-    bottom: -15%;
-  }
-
   main#home .hero .hero-content {
-    top: 40%;
-    /* transform: translate(15%, -50%); */
-  }
-
-  .header .hero-img {
-    right: 0%;
-  }
-
-  main#home .hero .hero-content h2 {
-    font-size: 1.8rem;
+    position: relative;
+    left: 10%;
+    top: 10%;
   }
 
   main#home .hero .hero-content h1 span {
-    font-size: 2rem;
+    font-size: 3rem;
   }
 
   main#home .hero .hero-content a {
-    padding: 1rem 3rem;
+    padding: 1rem;
+    font-size: 1.75rem;
+    color: white;
+    border-style: solid;
+    border-color: white;
   }
 }
 
@@ -464,18 +470,21 @@ main#home .hero .hero-content h1 span {
   font-size: 1.25rem;
 }
 
+/* mission statement */
 #mission {
   margin: 2rem;
 }
 
 #mission .container {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   flex-direction: row;
+  justify-content: center;
 }
 
 #mission .statement {
   max-width: 500px;
+  color: grey;
 }
 #mission .picture {
   max-width: 500px;
@@ -483,16 +492,18 @@ main#home .hero .hero-content h1 span {
 }
 
 @media only screen and(max-width: 996px) {
-  #mission .container {
+  section#mission .container {
     flex-direction: row;
     flex-wrap: wrap;
   }
 }
 
 main {
-  background-color: rgba(84, 107, 121, 0.411);
+  background-color: whitesmoke;
+  z-index: -10;
+  min-height: 100%;
+  margin-top: 0 !important;
   padding-top: 70px;
-  z-index: -1;
 }
 
 .card {
@@ -556,13 +567,60 @@ main {
   font-size: 1.25rem;
 }
 
-main {
-  min-height: 100%;
+#order-summary .card-body div.quantity {
+  border: 1px solid #4f4f4f;
+  border-radius: 5px;
+  color: #4f4f4f;
+}
+
+#order-summary .card-body div.quantity span {
+  border: 1px solid #4f4f4f;
+  padding: 3px;
+}
+#order-summary .card-body div.quantity a.minus {
+  margin-left: 2px;
+}
+#order-summary .card-body div.quantity a.plus {
+  margin: 2px;
 }
 
 /* order summary  end  */
 
 /* text on product */
+main#products section.products {
+  justify-content: center;
+}
+
+main#products div.container {
+  min-width: 100%;
+}
+
+main#products div.container section.products div.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  min-width: 100%;
+}
+main#products section.products div div.card {
+  position: relative;
+
+  padding-right: 15px;
+  padding-left: 15px;
+  margin: 1.5rem;
+  min-width: 280px;
+  max-width: 380px;
+  width: 100%;
+}
+@media only screen and(max-width: 1100px) {
+  main#products section.products div div.card {
+    min-width: 380px;
+  }
+}
+
+main#products section.products div div.card .view {
+  margin-top: 1rem;
+}
 #products .card-body h5 {
   color: #4f4f4f;
   font-size: 1.4rem;
@@ -584,7 +642,7 @@ main#product .container {
 }
 
 main#product div#product-picture {
-  padding-top: 2rem;
+  /* padding-top: 2rem; */
   max-width: 500px;
   height: auto;
 }
@@ -604,3 +662,88 @@ main#product p.product-price span {
   color: #4f4f4f;
 }
 /* end product page */
+
+/* start about page  */
+main section.about {
+  margin: 2rem;
+  color: #4f4f4f;
+}
+
+main section.about .container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+main section.about h1 {
+  margin: 1rem;
+  font-size: 3.25rem;
+}
+
+main section.about p {
+  max-width: 500px;
+  color: #4f4f4f;
+  margin: 1rem;
+  font-size: 2rem;
+}
+
+/* end about page  */
+
+/* sign out page  */
+
+section#sign-out {
+  padding-top: 70px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+section#sign-out .card {
+  width: fit-content;
+  align-items: center;
+  height: fit-content;
+}
+
+section#sign-out .card form {
+  box-shadow: none;
+  text-align: -webkit-center;
+}
+
+section#sign-out .card form button {
+  font-size: 1.5rem;
+  width: 40%;
+}
+
+/* sign out page end */
+
+/* signup page */
+
+section#sign-up,
+section#sign-in {
+  padding-top: 70px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+section#sign-up .card,
+section#sign-in .card {
+  width: fit-content;
+  align-items: center;
+  height: fit-content;
+}
+
+section#sign-up .card form,
+section#sign-in .card form {
+  box-shadow: none;
+  text-align: -webkit-center;
+}
+
+section#sign-up .card form button,
+section#sign-in .card form button {
+  font-size: 1.5rem;
+  width: 40%;
+}
+/* signup page end  */
