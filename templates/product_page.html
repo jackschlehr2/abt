@@ -15,7 +15,7 @@
               <div class="view overlay">
                 <a href="{{ item.get_absolute_url }}">
                   <div class="mask rgba-white-slight"></div>
-                  <img src="{{ item.image.url }}" class="card-img-top">
+                  <img src="{{ item.get_first_image }}" class="card-img-top">
                 </a>
               </div>
 
@@ -28,7 +28,7 @@
                 </h5>
 
                 <h6 class="font-weight-bold grey-text">
-                  ${{ item.price }}
+                  ${{ item.price }} 
                 </h4>
 
               </div>

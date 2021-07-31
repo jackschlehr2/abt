@@ -2,8 +2,17 @@
 <main class="mt-5 pt-4" id="product">
   <div class="container mt-5">
     <!--picture-->
-    <div class="col-md-6 mb-4" id="product-picture">
-      <img src="{{ item.image.url }}" class="img-fluid" alt="" />
+    <div class="col-md-6 mb-4 card" id="product-picture">
+      {% for image in item.get_sorted_images %}
+      <div class="mySlides">
+        <img src="{{ image.image.url }}" style="width: 100%" />
+        <div class="numbertext">
+          {{forloop.counter}}/{{item.get_sorted_images|length }}
+        </div>
+      </div>
+      {% endfor %}
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
     <!--picture-->
 
@@ -88,6 +97,34 @@
         },
       });
       console.log("sent");
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides((slideIndex += n));
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides((slideIndex = n));
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      if (n > slides.length) {
+        slideIndex = 1;
+      }
+      if (n < 1) {
+        slideIndex = slides.length;
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slides[slideIndex - 1].style.display = "block";
     }
   </script>
 </main>
