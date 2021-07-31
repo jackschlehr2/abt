@@ -237,6 +237,7 @@ def change_quantity(request, slug, size, quantity):
             order_item.save()
             if order_item.quantity <= 0:
                 order.items.remove(order_item)
+                order_item.delete()
                 messages.info(request, "This item was removed from your cart")
             else:
                 messages.info(request, "This item quantity was updated")

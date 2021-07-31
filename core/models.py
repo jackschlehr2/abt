@@ -70,7 +70,7 @@ class OrderItem(models.Model):
     selected_size = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.quantity} of {self.selected_size} {self.item.title}"
+        return f"{self.quantity} of {self.get_size()} {self.item.title}"
 
     def get_final_price(self):
         return self.quantity * self.item.price
