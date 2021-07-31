@@ -786,4 +786,9 @@ section#sign-out .card form button {
   font-size: 1.5rem;
   width: 40%;
 }
+
+section#sign-in .card form input#id_remember {
+  height: 30px;
+  width: 300px;
+}
 /* signup page end  */
