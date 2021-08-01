@@ -545,7 +545,11 @@ main {
   line-height: 1;
 }
 
-#order-summary .card-body h5.mb-4 {
+#order-summary .card-body {
+  color: #4f4f4f;
+}
+
+#order-summary .card-body h5 {
   font-size: 2rem;
   color: #4f4f4f;
   font-weight: 500;
