@@ -200,7 +200,6 @@ def add_to_cart(request, slug, size):
         ordered=False,
         selected_size=size
     )
-    print(created, order_item.quantity+1)
     if not created and in_stock(item, size, order_item.quantity+1):
         success = change_quantity(request, slug, size, 1)
     elif created and in_stock(item, size, 1):
@@ -217,10 +216,6 @@ def remove_single_item_from_cart(request, slug, size):
 
 
 def change_quantity(request, slug, size, quantity):
-    try:
-        size = int(request.GET.get('size'))
-    except Exception as e:
-        print(e)
     item = get_object_or_404(Item, slug=slug)
 
     order_item, created = OrderItem.objects.get_or_create(
