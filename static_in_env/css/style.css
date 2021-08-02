@@ -377,7 +377,7 @@ div#home-content #bootstrap-override.nav.fix-nav {
   }
 
   #bootstrap-override.nav.show {
-    background-color: rgba(0, 0, 0, 0.39);
+    background-color: rgb(146, 144, 144);
   }
 
   #bootstrap-override .nav-link.icon {
