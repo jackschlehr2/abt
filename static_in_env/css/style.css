@@ -228,7 +228,12 @@ li {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-#bootstrap-override.nav.fix-nav {
+div#home-content #bootstrap-override.nav {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#bootstrap-override.nav.fix-nav,
+div#home-content #bootstrap-override.nav.fix-nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -250,7 +255,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: rgb(174, 182, 187);
+  color: white;
   /* background-color: rgba(0, 0, 0, 0.5); */
 }
 
