@@ -27,7 +27,7 @@
       <div class="p-4">
         <p class="product-title">{{object.title}}</p>
 
-        <p class="product-description">{{object.description}}</p>
+        {{object.description|linebreaks}}
         <p class="product-price">
           <span>${{ item.price }}</span>
         </p>

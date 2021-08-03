@@ -530,6 +530,7 @@ main#home section#featured-products h1 {
 
 main#home section#featured-products div.container {
   display: flex;
+  justify-content: center;
 }
 main#home section#featured-products div.container div {
   margin: 1rem;
@@ -761,16 +762,24 @@ main#product div#product-picture .fade {
 main#product p.product-title {
   font-size: 2.5rem;
   color: #4f4f4f;
+  display: block;
 }
 
-main#product p.product-description {
+main#product p {
   font-size: 1.5rem;
   color: #4f4f4f;
 }
 
+main#product p.product-price {
+  display: block;
+}
 main#product p.product-price span {
   font-size: 1.5rem;
   color: #4f4f4f;
+  display: block;
+}
+
+main#product select {
 }
 /* end product page */
 
