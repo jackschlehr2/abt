@@ -40,7 +40,6 @@ def create_checkout_session(request):
                     'unit_amount': int(order_item.get_item_price())*100,
                     'product_data': {
                         'name': order_item.get_name(),
-                        'images': [order_item.get_image()],
                     },
                 },
                 'tax_rates': ['txr_1JDwWeFVzms5crHWOIT4FZNx'],
