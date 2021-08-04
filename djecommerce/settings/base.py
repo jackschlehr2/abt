@@ -3,7 +3,6 @@ from decouple import config
 from django.core.management.utils import get_random_secret_key
 import sys
 import dj_database_url
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
