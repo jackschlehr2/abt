@@ -1,9 +1,16 @@
-#!/usr/bin/env python
 import os
 import sys
 
 if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djecommerce.settings.development')
+    DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+    if DEVELOPMENT_MODE:
+
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                              'djecommerce.settings.development')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                              'djecommerce.settings.production')
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
