@@ -7,11 +7,9 @@ from .models import Item, Order, OrderItem, UserProfile
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import CheckoutForm
 from django.conf import settings
 from django.contrib import messages
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -72,7 +70,6 @@ class HomeView(ListView):
 
 class ProductsView(ListView):
     model = Item
-
     paginate_by = 10
     template_name = 'product_page.html'
 
