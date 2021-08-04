@@ -1,11 +1,13 @@
 import os
 from decouple import config
+from django.core.management.utils import get_random_secret_key
+import sys
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
 
-SECRET_KEY = config('SECRET_KEY')
-
+SECRET_KEY = config("DJANGO_SECRET_KEY", get_random_secret_key())
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -19,7 +21,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
-    'django_countries',
 
     'core',
 
@@ -56,7 +57,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
