@@ -12,9 +12,6 @@ from django.contrib import messages
 from django.http import JsonResponse
 
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
-
 def products(requests):
     context = {
         'items': Item.objects.all()
@@ -24,6 +21,7 @@ def products(requests):
 
 def create_checkout_session(request):
     try:
+        stripe.api_key = settings.STRIPE_SECRET_KEY
         order = Order.objects.get(user=request.user)
     except Exception as e:
         print(e)
