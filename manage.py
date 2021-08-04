@@ -3,6 +3,7 @@ import sys
 
 if __name__ == '__main__':
     DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+    print(DEVELOPMENT_MODE)
     if DEVELOPMENT_MODE:
 
         os.environ.setdefault('DJANGO_SETTINGS_MODULE',
