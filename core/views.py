@@ -1,5 +1,5 @@
+import os
 import stripe
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView, View
@@ -27,7 +27,7 @@ def create_checkout_session(request):
         print(e)
 
     DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-    if DEVELOPMENT_MODE == "True":
+    if DEVELOPMENT_MODE == True:
         YOUR_DOMAIN = 'http://127.0.0.1:8000'
         ship_rate = 'shr_1JDwVPFVzms5crHWCjcYKk16'
         tax_rate = 'txr_1JDwWeFVzms5crHWOIT4FZNx'
@@ -35,7 +35,6 @@ def create_checkout_session(request):
         YOUR_DOMAIN = os.getenv("DJANGO_ALLOWED_HOSTS")
         ship_rate = 'shr_1JLLNAFVzms5crHWPyOmJdTf'
         tax_rate = 'txr_1JI5ClFVzms5crHWRYVctqwo'
-
     try:
 
         line_items = []
