@@ -538,12 +538,15 @@ main#home section#featured-products h1 {
 main#home section#featured-products div.container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 main#home section#featured-products div.container div {
   margin: 1rem;
-  max-width: 20vw;
+  max-width: 250px;
+  width: 100%;
   height: auto;
 }
+
 main#home section#featured-products div.container div:hover {
   transform: scale(1.02);
 }
