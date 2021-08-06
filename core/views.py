@@ -32,7 +32,7 @@ def create_checkout_session(request):
         ship_rate = 'shr_1JDwVPFVzms5crHWCjcYKk16'
         tax_rate = 'txr_1JDwWeFVzms5crHWOIT4FZNx'
     else:
-        YOUR_DOMAIN = 'http://127.0.0.1:8000'
+        YOUR_DOMAIN = os.getenv("DJANGO_ALLOWED_HOSTS")
         ship_rate = 'shr_1JLLNAFVzms5crHWPyOmJdTf'
         tax_rate = 'txr_1JI5ClFVzms5crHWRYVctqwo'
 
@@ -48,7 +48,7 @@ def create_checkout_session(request):
                         'name': order_item.get_name(),
                     },
                 },
-                'tax_rates': [txr_1JDwWeFVzms5crHWOIT4FZNx],
+                'tax_rates': [tax_rate],
                 'quantity': order_item.get_quantity(),
             })
 
