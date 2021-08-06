@@ -323,7 +323,7 @@ div#home-content #bootstrap-override.nav.fix-nav {
     background-color: whitesmoke;
     transition: all 500ms ease-in-out;
     z-index: 100;
-    color: rgb(174, 182, 187);
+    color: #224249;
   }
 
   #bootstrap-override .menu.show {
@@ -334,7 +334,7 @@ div#home-content #bootstrap-override.nav.fix-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #596e79;
+    background-color: #2a528a;
     padding: 1rem 1.6rem;
   }
 
@@ -551,6 +551,9 @@ main#home section#featured-products div.container div:hover {
   transform: scale(1.02);
 }
 
+div#messages {
+  z-index: 1;
+}
 /* end homepage */
 
 main {
@@ -629,6 +632,8 @@ main {
   border: 1px solid #4f4f4f;
   border-radius: 5px;
   color: #4f4f4f;
+  min-width: 64px;
+  width: 100%;
 }
 
 #order-summary .card-body div.quantity span {
@@ -839,6 +844,10 @@ section#sign-out .card {
   height: fit-content;
 }
 
+section#sign-in .card a#sign-up-link {
+  color: rgb(89, 111, 214);
+}
+
 section#sign-up .card form,
 section#sign-in .card form,
 section#sign-out .card form {
@@ -853,8 +862,12 @@ section#sign-out .card form button {
   width: 40%;
 }
 
+section#sign-up .card form ul.errorlist {
+  color: rgb(177, 15, 15);
+}
+
 section#sign-in .card form input#id_remember {
-  height: 30px;
-  width: 300px;
+  height: auto;
+  width: 100%;
 }
 /* signup page end  */

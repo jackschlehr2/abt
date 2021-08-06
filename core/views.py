@@ -32,7 +32,7 @@ def create_checkout_session(request):
         ship_rate = 'shr_1JDwVPFVzms5crHWCjcYKk16'
         tax_rate = 'txr_1JDwWeFVzms5crHWOIT4FZNx'
     else:
-        YOUR_DOMAIN = os.getenv("DJANGO_ALLOWED_HOSTS")
+        YOUR_DOMAIN = 'https://' + os.getenv("DJANGO_ALLOWED_HOSTS")
         ship_rate = 'shr_1JLLNAFVzms5crHWPyOmJdTf'
         tax_rate = 'txr_1JI5ClFVzms5crHWRYVctqwo'
     try:
@@ -71,13 +71,11 @@ def create_checkout_session(request):
 
 class HomeView(ListView):
     model = Item
-    paginate_by = 10
     template_name = 'home.html'
 
 
 class ProductsView(ListView):
     model = Item
-    paginate_by = 10
     template_name = 'product_page.html'
 
 
