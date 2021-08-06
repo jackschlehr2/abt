@@ -24,7 +24,9 @@ html {
 }
 
 body {
-  font-family: "Source Sans Pro", sans-serif;
+  /* font-family: "Source Sans Pro", sans-serif; */
+  font-family: "american-typewriter";
+
   font-size: 1.6rem;
   font-weight: 400;
   background-color: #fff;
@@ -40,7 +42,8 @@ h2,
 h3,
 h4 {
   font-weight: 500;
-  font-family: "Crimson Text", serif;
+  /* font-family: "Crimson Text", serif; */
+  font-family: "american-typewriter";
 }
 
 a {
@@ -110,7 +113,9 @@ input {
 button .stripe {
   background: #5469d4;
   color: #ffffff;
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; */
+  font-family: "american-typewriter";
+
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
@@ -425,7 +430,8 @@ main#home .hero::before {
 main#home .hero .hero-content {
   position: relative;
   left: 20%;
-  font-family: "Crimson Text", serif;
+  /* font-family: "Crimson Text", serif; */
+  font-family: "american-typewriter";
 }
 
 main#home .hero .hero-content h1 span {
@@ -519,7 +525,9 @@ main#home section#featured-products {
 }
 main#home section#featured-products h1 {
   font-weight: 500;
-  font-family: "Crimson Text", serif;
+  /* font-family: "Crimson Text", serif; */
+  font-family: "american-typewriter";
+
   text-align: center;
   color: #224249;
   margin-bottom: 0.5rem;
