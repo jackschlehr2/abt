@@ -25,7 +25,17 @@ def create_checkout_session(request):
         order = Order.objects.get(user=request.user)
     except Exception as e:
         print(e)
-    YOUR_DOMAIN = 'http://127.0.0.1:8000'
+
+    DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+    if DEVELOPMENT_MODE == "True":
+        YOUR_DOMAIN = 'http://127.0.0.1:8000'
+        ship_rate = 'shr_1JDwVPFVzms5crHWCjcYKk16'
+        tax_rate = 'txr_1JDwWeFVzms5crHWOIT4FZNx'
+    else:
+        YOUR_DOMAIN = 'http://127.0.0.1:8000'
+        ship_rate = 'shr_1JLLNAFVzms5crHWPyOmJdTf'
+        tax_rate = 'txr_1JI5ClFVzms5crHWRYVctqwo'
+
     try:
 
         line_items = []
@@ -38,13 +48,13 @@ def create_checkout_session(request):
                         'name': order_item.get_name(),
                     },
                 },
-                'tax_rates': ['txr_1JDwWeFVzms5crHWOIT4FZNx'],
+                'tax_rates': [txr_1JDwWeFVzms5crHWOIT4FZNx],
                 'quantity': order_item.get_quantity(),
             })
 
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
-            shipping_rates=['shr_1JDwVPFVzms5crHWCjcYKk16'],
+            shipping_rates=[ship_rate],
             shipping_address_collection={
                 'allowed_countries': ['US'],
             },
