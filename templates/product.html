@@ -24,20 +24,21 @@
     <!--description-->
     <div class="col-md-6 mb-4">
       <!--Content-->
-      <div class="p-4">
+      <div class="p-1">
         <p class="product-title">{{object.title}}</p>
 
         {{object.description|linebreaks}}
+
         <p class="product-price">
           <span>${{ item.price }}</span>
         </p>
+        <p id="please-select-size">select a size</p>
 
         <select
           id="size_selector"
-          name="size"
-          required
+          name="size"          
           onchange="size_selected(this)"
-        >
+        required>
           <option value="none" selected disabled hidden>select size</option>
           <option value="0">S</option>
           <option value="1">M</option>
@@ -65,22 +66,28 @@
 ></script>
   <script>
     $("#sold_out").hide();
+    $('#please-select-size').hide();
     var token = "{{ csrf_token }}";
     const button = document.querySelector("#add_to_cart");
     button.addEventListener("click", () => {
       var serializedData = $("select").serialize();
-      $.ajax({
-        headers: { "X-CSRFToken": token },
-        type: "POST",
-        url: "{% url 'core:product' item.slug %}",
-        data: serializedData,
-        success: function (response) {
-          document.location.href = "{% url 'core:order-summary' %}";
-        },
-        error: function (response) {
-          alert(response["responseJSON"]["error"]);
-        },
-      });
+      if( serializedData == "" ){
+        $('#please-select-size').show();
+      }
+      else{
+        $.ajax({
+          headers: { "X-CSRFToken": token },
+          type: "POST",
+          url: "{% url 'core:product' item.slug %}",
+          data: serializedData,
+          success: function (response) {
+            document.location.href = "{% url 'core:order-summary' %}";
+          },
+          error: function (response) {
+            alert(response["responseJSON"]["error"]);
+          },
+        });
+      }
     });
 
     function size_selected(obj) {
