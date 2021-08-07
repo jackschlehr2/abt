@@ -793,8 +793,11 @@ main#product p.product-price span {
   display: block;
 }
 
-main#product select {
+main#product p#please-select-size {
+  color: rgb(177, 15, 15);
+  margin-bottom: 1px;
 }
+
 /* end product page */
 
 /* start about page  */
@@ -867,7 +870,8 @@ section#sign-up .card form ul.errorlist {
 }
 
 section#sign-in .card form input#id_remember {
-  height: auto;
-  width: 100%;
+  height: 100%;
+  margin: 2px;
 }
+
 /* signup page end  */
