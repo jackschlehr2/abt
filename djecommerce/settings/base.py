@@ -25,6 +25,11 @@ INSTALLED_APPS = [
     'core',
 
 ]
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "True") == "True"
+if DEVELOPMENT_MODE:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'none'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -37,7 +42,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'djecommerce.urls'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -79,6 +83,7 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+
 # CRISPY FORMS
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
