@@ -429,11 +429,20 @@ main#home .hero::before {
 
 main#home .hero .hero-content {
   position: relative;
+  animation: hero-content;
+  animation-duration: 2s;
   left: 20%;
-  /* font-family: "Crimson Text", serif; */
   font-family: "american-typewriter";
 }
 
+@keyframes hero-content {
+  0% {
+    left: 80%;
+  }
+  100% {
+    left: 20%;
+  }
+}
 main#home .hero .hero-content h1 span {
   font-size: 2rem;
   font-weight: 700;
@@ -471,9 +480,19 @@ main#home .hero .hero-content a {
   main#home .hero .hero-content {
     position: relative;
     left: 10%;
+    animation: hero-content;
+    animation-duration: 2s;
     top: 10%;
   }
 
+  @keyframes hero-content {
+    0% {
+      left: 80%;
+    }
+    100% {
+      left: 10%;
+    }
+  }
   main#home .hero .hero-content h1 span {
     font-size: 3rem;
   }

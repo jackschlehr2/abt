@@ -37,7 +37,7 @@
   <section id="featured-products">
     <h1>featured products</h1>
     
-    <div class="container">
+    <div class="container" id="pictures">
        <div class="product1">
         <div class="picture">
           <a href="{% url 'core:product' 'alligator-dusty-rose-crewneck' %}">
@@ -64,6 +64,22 @@
         </div>
       
     </div>
+    <script>
+
+    var myScrollFunc = function() {
+      var y = window.scrollY;
+      var pictures = $( "#mission" )
+      var position = pictures.position();
+      if (y >= position.top ) {
+         $('#pictures').fadeIn(1500) 
+      } else {
+        $('#pictures').hide()
+      }
+    };
+
+    window.addEventListener("scroll", myScrollFunc);
+    </script>
+
   </section>
 
   </div>
