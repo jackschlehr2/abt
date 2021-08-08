@@ -26,6 +26,7 @@ INSTALLED_APPS = [
 
 ]
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "True") == "True"
+
 if DEVELOPMENT_MODE:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
