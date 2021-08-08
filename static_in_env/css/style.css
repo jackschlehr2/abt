@@ -825,22 +825,23 @@ main section.about {
   color: #4f4f4f;
 }
 
-main section.about .container {
+main section.about div.container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
+  padding: 1rem;
+  background-color: rgb(178, 185, 214);
+  border-radius: 1rem;
 }
 
-main section.about .container main section.about h1 {
-  margin: 1rem;
+main section.about h1 {
   font-size: 3.25rem;
 }
 
 main section.about p {
-  max-width: 500px;
+  width: 100%;
   color: #4f4f4f;
-  margin: 1rem;
   font-size: 2rem;
 }
 
