@@ -1,9 +1,8 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} {% load static %}
 <main>
   <section class="about">
     <div class="container">
-      <div class="card">
-        <!--Section: Products-->
+      <div class="about">
         <h1>about</h1>
         <p>
           My name is Jason and I currently am a college sophomore. This past
@@ -24,6 +23,9 @@
           email (abtomorrow1@gmail.com) to talk with me about concerns, issues,
           or ideas!
         </p>
+      </div>
+      <div class="picture">
+        <img src="{% static 'img/pictures/woods.jpg' %}" alt="" class="img" />
       </div>
     </div>
   </section>
