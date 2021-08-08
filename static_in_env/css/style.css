@@ -429,11 +429,20 @@ main#home .hero::before {
 
 main#home .hero .hero-content {
   position: relative;
+  animation: hero-content;
+  animation-duration: 2s;
   left: 20%;
-  /* font-family: "Crimson Text", serif; */
   font-family: "american-typewriter";
 }
 
+@keyframes hero-content {
+  0% {
+    left: 80%;
+  }
+  100% {
+    left: 20%;
+  }
+}
 main#home .hero .hero-content h1 span {
   font-size: 2rem;
   font-weight: 700;
@@ -471,9 +480,19 @@ main#home .hero .hero-content a {
   main#home .hero .hero-content {
     position: relative;
     left: 10%;
+    animation: hero-content;
+    animation-duration: 2s;
     top: 10%;
   }
 
+  @keyframes hero-content {
+    0% {
+      left: 80%;
+    }
+    100% {
+      left: 10%;
+    }
+  }
   main#home .hero .hero-content h1 span {
     font-size: 3rem;
   }
@@ -831,7 +850,8 @@ main section.about p {
 
 section#sign-up,
 section#sign-in,
-section#sign-out {
+section#sign-out,
+section#password-reset {
   padding-top: 70px;
   color: black;
   display: flex;
@@ -841,10 +861,16 @@ section#sign-out {
 
 section#sign-up .card,
 section#sign-in .card,
-section#sign-out .card {
+section#sign-out .card,
+section#password-reset .card {
   width: fit-content;
   align-items: center;
   height: fit-content;
+}
+
+section#sign-in .card div#div_id_remember {
+  display: grid;
+  grid-template-columns: max-content auto;
 }
 
 section#sign-in .card a#sign-up-link {
@@ -853,14 +879,16 @@ section#sign-in .card a#sign-up-link {
 
 section#sign-up .card form,
 section#sign-in .card form,
-section#sign-out .card form {
+section#sign-out .card form,
+section#password-reset .card form {
   box-shadow: none;
   text-align: -webkit-center;
 }
 
 section#sign-up .card form button,
 section#sign-in .card form button,
-section#sign-out .card form button {
+section#sign-out .card form button,
+section#password-reset .card form button {
   font-size: 1.5rem;
   width: 40%;
 }
@@ -870,8 +898,9 @@ section#sign-up .card form ul.errorlist {
 }
 
 section#sign-in .card form input#id_remember {
-  height: 100%;
-  margin: 2px;
+  height: 15px;
+  display: grid;
+  width: 15px;
 }
 
 /* signup page end  */

@@ -25,6 +25,19 @@ INSTALLED_APPS = [
     'core',
 
 ]
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "True") == "True"
+if DEVELOPMENT_MODE:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    abt_pass = os.getenv("EMAIL_HOST_PASSWORD")
+    if not abt_pass:
+        print('error env:EMAIL_HOST_PASSWORD not found')
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'abettertomorrowmail@gmail.com'
+    EMAIL_HOST_PASSWORD = abt_pass
+    EMAIL_USE_TLS = True
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -37,7 +50,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'djecommerce.urls'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -79,6 +91,8 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_SESSION_REMEMBER = True
 # CRISPY FORMS
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
