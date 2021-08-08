@@ -776,7 +776,7 @@ main#product div#product-picture .fade {
 
 @-webkit-keyframes fade {
   from {
-    opacity: 0.4;
+    opacity: 0.4w;
   }
   to {
     opacity: 1;
