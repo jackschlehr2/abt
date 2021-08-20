@@ -891,7 +891,8 @@ section#sign-in .card form button,
 section#sign-out .card form button,
 section#password-reset .card form button {
   font-size: 1.5rem;
-  width: 40%;
+  min-width: 40%;
+  width: fit-content;
 }
 
 section#sign-up .card form ul.errorlist {
